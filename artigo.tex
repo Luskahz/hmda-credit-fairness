@@ -1,0 +1,159 @@
+% Modelo para artigos da Sociedade Brasileira de Computação (SBC).
+% Fonte do modelo: https://www.overleaf.com/latex/templates/sbc-conferences-template/blbxwjwzdngr
+\documentclass[12pt]{article}
+
+\usepackage{sbc-template}
+\usepackage{graphicx,url}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,brazil]{babel}
+\usepackage[hidelinks]{hyperref}
+
+\sloppy
+
+\title{Raça, etnia e renda regional na previsão de\\
+aprovação de financiamento imobiliário}
+
+\author{João Gabriel de Faria Beserra\inst{1}, Lucas Alves de Melo Lins\inst{1}}
+
+\address{Instituto Federal de Educação, Ciência e Tecnologia de São Paulo (IFSP)\\
+  Campus Caraguatatuba -- Avenida Bahia, 1739 -- Caraguatatuba, SP, Brasil
+  % \email{Inserir os e-mails institucionais confirmados pelos autores.}
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{resumo}
+Este estudo propõe comparar regressão logística e floresta aleatória para
+prever decisões de aprovação de financiamento imobiliário nos Estados Unidos,
+com dados públicos do Home Mortgage Disclosure Act. Serão testados quatro
+conjuntos de variáveis para avaliar como a raça, a etnia e a renda da área
+onde fica o imóvel influenciam as previsões dos modelos. A análise comparará
+o desempenho geral e as taxas de erro por grupo demográfico e faixa de renda local.
+\end{resumo}
+
+\section{Introdução}
+
+Os dados públicos do \textit{Home Mortgage Disclosure Act} (HMDA) reúnem
+registros de solicitações e operações de financiamento imobiliário
+informados por instituições financeiras nos Estados Unidos. Esses
+registros incluem a renda do solicitante, seu comprometimento com dívidas,
+o valor do financiamento, características do imóvel e a decisão da
+instituição~\cite{ffiec:lar}.
+
+A partir desses dados, o estudo investiga se, além do perfil financeiro
+do solicitante e das características do financiamento, a raça e a etnia
+registradas e a renda da região onde fica o imóvel ajudam a explicar
+quais pedidos foram aprovados ou recusados. Para isso, serão comparados
+modelos que incluem informações de raça e etnia, informações de renda
+regional ou ambas, tendo como referência um modelo com os dados
+financeiros e as características do financiamento e do imóvel.
+
+A pergunta central que queremos responder é como a inclusão de raça e etnia registradas e da renda
+relativa do setor censitário do imóvel, separadamente e em conjunto, alteram a
+previsão ou aprovação da distribuição dos erros entre grupos. Para responder
+a essa pergunta, serão comparadas quatro configurações de atributos com 4 modelos diferentes e a mesma amostra de teste. A aplicação é a análise de decisões
+históricas de crédito.
+
+\section{Metodologia}
+
+\subsection{Dados e definição de aprovação}
+
+A unidade de análise será a solicitação de financiamento. A edição pública
+de 2024 do HMDA será a referência para o recorte inicial, voltado à compra
+de residência principal~\cite{ffiec:2024}. O campo \texttt{action\_taken}
+define o desfecho. Os códigos 1 (financiamento contratado) e 2 (pedido
+aprovado, mas não aceito) formam a classe de aprovação. O código 3
+identifica as recusas. Os demais desfechos ficam fora da
+análise~\cite{ffiec:lar}.
+
+\subsection{Variáveis e treinamento}
+
+A configuração de referência ($A$) inclui renda, idade e endividamento do
+solicitante, dados do financiamento e do imóvel, instituição e ano.
+A configuração $A+B$ acrescenta raça e etnia registradas no HMDA.
+A configuração $A+C$ acrescenta a renda relativa da área onde fica o
+imóvel, medida pela razão entre a renda familiar mediana local e a da
+região de referência. A configuração $A+B+C$ reúne os dois grupos de
+variáveis~\cite{ffiec:lar,ffiec:censo}. Juros, custos finais e motivos de
+recusa serão excluídos por poderem revelar o desfecho.
+
+Cada configuração será testada com regressão logística e floresta
+aleatória. A divisão estratificada reservará cerca de 80\% dos registros
+para treinamento e 20\% para teste, com a mesma partição em todas as
+comparações. O tratamento de valores ausentes, a codificação, o ajuste
+dos modelos e a escolha do limiar serão feitos na etapa de treinamento
+e validação.
+
+\subsection{Plano de avaliação}
+
+O desempenho geral será comparado por ROC-AUC, PR-AUC para recusas e
+acurácia balanceada. Por grupo demográfico e faixa de renda local,
+serão informados o número de pedidos, as taxas de aprovação observada
+e prevista e as taxas de falsos positivos e falsos negativos. A
+comparação principal aplicará, para cada modelo, o mesmo limiar a
+todos os grupos.
+
+\section{Resultados e discussão}
+
+\emph{A preencher após o experimento com o recorte final, o número de
+solicitações e a proporção de aprovações e recusas.}
+
+\begin{table}[htbp]
+\centering
+\caption{Desempenho das configurações no conjunto de teste}
+\label{tab:resultados}
+\small
+\begin{tabular}{@{}llccc@{}}
+\hline
+\textbf{Algoritmo} & \textbf{Config.} & \textbf{ROC-AUC} &
+\textbf{PR-AUC (recusa)} & \textbf{Acur. bal.} \\
+\hline
+Regressão logística & $A$       & -- & -- & -- \\
+Regressão logística & $A+B$     & -- & -- & -- \\
+Regressão logística & $A+C$     & -- & -- & -- \\
+Regressão logística & $A+B+C$   & -- & -- & -- \\
+Floresta aleatória  & $A$       & -- & -- & -- \\
+Floresta aleatória  & $A+B$     & -- & -- & -- \\
+Floresta aleatória  & $A+C$     & -- & -- & -- \\
+Floresta aleatória  & $A+B+C$   & -- & -- & -- \\
+\hline
+\end{tabular}
+\end{table}
+
+% Compare cada configuração com A. Destaque as diferenças nas taxas
+% de erro entre grupos e informe quantos pedidos há nos grupos citados.
+
+A base pública oferece informações parciais sobre o histórico de crédito
+e os critérios internos das instituições. A renda local se refere à
+região do imóvel. As diferenças observadas serão interpretadas como
+associações no recorte estudado. As estimativas de grupos pequenos
+exigem cautela.
+
+1Este estudo propõe avaliar se a inclusão de raça e etnia registradas e
+da renda relativa do setor censitário do imóvel altera o desempenho
+dos modelos na previsão de decisões históricas de financiamento
+imobiliário. A comparação das quatro configurações na mesma amostra
+de teste permitirá medir a contribuição preditiva desses atributos,
+separadamente e em conjunto, em relação à configuração de referência.
+
+A análise das taxas de falsos positivos e falsos negativos por grupo
+demográfico e faixa de renda local permitirá verificar se diferenças
+no desempenho geral são acompanhadas por mudanças na distribuição dos
+erros. Como os dados públicos do HMDA cobrem apenas parte do histórico
+de crédito e dos critérios adotados pelas instituições, a interpretação
+dos resultados se limitará a associações no recorte estudado. A
+execução dos experimentos permitirá estimar a magnitude dessas
+diferenças e avaliar em quais grupos elas se concentram.
+\begingroup
+% O estilo SBC já imprime autor e ano no início de cada referência.
+\makeatletter
+\renewcommand{\@biblabel}[1]{}
+\makeatother
+\bibliographystyle{sbc}
+\bibliography{referencias}
+\endgroup
+
+\end{document}
