@@ -1,42 +1,43 @@
-# Python
-.venv/
-venv/
+# Ambientes virtuais e arquivos gerados pelo Python
+/.venv/
+/venv/
 __pycache__/
-*.py[cod]
+*.pyc
+*.pyo
 *.egg-info/
 .pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.coverage
-htmlcov/
-build/
-dist/
 
-# IDE / OS
-.idea/
-.vscode/
+# Arquivos locais do editor e do sistema
+/.idea/
+/.vscode/
 .DS_Store
 Thumbs.db
 
-# Jupyter
+# Checkpoints do Jupyter
 .ipynb_checkpoints/
 
-# Local data and trained artifacts
-data/raw/*
-!data/raw/.gitkeep
-data/interim/*
-!data/interim/.gitkeep
-data/processed/*
-!data/processed/.gitkeep
-models/
-artifacts/
+# Dados locais do HMDA e saídas dos notebooks
+/data/raw/*
+!/data/raw/.gitkeep
+/data/interim/*
+!/data/interim/.gitkeep
+/data/processed/*
+!/data/processed/.gitkeep
+/reports/local/
+/reports/colab/
 
-# Local environment and secrets
+# Configuração local
 .env
 .env.*
 !.env.example
 
-# Generated reports; curated figures can be committed deliberately
-reports/*.csv
-reports/*.json
-reports/*.parquet
+# Saídas da compilação do artigo
+/artigo.aux
+/artigo.bbl
+/artigo.blg
+/artigo.fdb_latexmk
+/artigo.fls
+/artigo.log
+/artigo.out
+/artigo.pdf
+/artigo.synctex.gz

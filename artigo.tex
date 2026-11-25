@@ -2,11 +2,11 @@
 % Fonte do modelo: https://www.overleaf.com/latex/templates/sbc-conferences-template/blbxwjwzdngr
 \documentclass[12pt]{article}
 
-\usepackage{sbc-template}
 \usepackage{graphicx,url}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage[english,brazil]{babel}
+\usepackage[english,brazilian]{babel}
+\usepackage{sbc-template}
 \usepackage[hidelinks]{hyperref}
 
 \sloppy
@@ -26,12 +26,14 @@ aprovação de financiamento imobiliário}
 \maketitle
 
 \begin{resumo}
-Este estudo propõe comparar regressão logística e floresta aleatória para
-prever decisões de aprovação de financiamento imobiliário nos Estados Unidos,
-com dados públicos do Home Mortgage Disclosure Act. Serão testados quatro
-conjuntos de variáveis para avaliar como a raça, a etnia e a renda da área
-onde fica o imóvel influenciam as previsões dos modelos. A análise comparará
-o desempenho geral e as taxas de erro por grupo demográfico e faixa de renda local.
+Este estudo compara regressão logística e floresta aleatória na previsão
+de decisões históricas de financiamento imobiliário, com dados públicos
+do Home Mortgage Disclosure Act de 2024. A primeira rodada usou uma amostra
+de 100 mil das 3.794.116 solicitações elegíveis e comparou quatro
+configurações de atributos em um teste comum de 20 mil solicitações.
+A inclusão de raça, etnia e renda relativa do setor censitário gerou
+ganhos globais inferiores a um ponto percentual em relação à referência,
+com mudanças mais pronunciadas nas taxas de erro de alguns grupos.
 \end{resumo}
 
 \section{Introdução}
@@ -46,23 +48,23 @@ instituição~\cite{ffiec:lar}.
 A partir desses dados, o estudo investiga se, além do perfil financeiro
 do solicitante e das características do financiamento, a raça e a etnia
 registradas e a renda da região onde fica o imóvel ajudam a explicar
-quais pedidos foram aprovados ou recusados. Para isso, serão comparados
+quais pedidos foram aprovados ou recusados. Para isso, comparamos
 modelos que incluem informações de raça e etnia, informações de renda
 regional ou ambas, tendo como referência um modelo com os dados
 financeiros e as características do financiamento e do imóvel.
 
-A pergunta central que queremos responder é como a inclusão de raça e etnia registradas e da renda
-relativa do setor censitário do imóvel, separadamente e em conjunto, alteram a
-previsão ou aprovação da distribuição dos erros entre grupos. Para responder
-a essa pergunta, serão comparadas quatro configurações de atributos com 4 modelos diferentes e a mesma amostra de teste. A aplicação é a análise de decisões
-históricas de crédito.
+A pergunta central é como a inclusão de raça e etnia registradas e da
+renda relativa do setor censitário do imóvel, separadamente e em conjunto,
+altera o desempenho preditivo e a distribuição dos erros entre grupos.
+Comparamos quatro configurações de atributos em dois algoritmos, com a
+mesma amostra de teste para as oito combinações.
 
 \section{Metodologia}
 
 \subsection{Dados e definição de aprovação}
 
-A unidade de análise será a solicitação de financiamento. A edição pública
-de 2024 do HMDA será a referência para o recorte inicial, voltado à compra
+A unidade de análise é a solicitação de financiamento. Usamos o snapshot
+público de 2024 do HMDA para o recorte de compra
 de residência principal~\cite{ffiec:2024}. O campo \texttt{action\_taken}
 define o desfecho. Os códigos 1 (financiamento contratado) e 2 (pedido
 aprovado, mas não aceito) formam a classe de aprovação. O código 3
@@ -78,32 +80,37 @@ A configuração $A+C$ acrescenta a renda relativa da área onde fica o
 imóvel, medida pela razão entre a renda familiar mediana local e a da
 região de referência. A configuração $A+B+C$ reúne os dois grupos de
 variáveis~\cite{ffiec:lar,ffiec:censo}. Juros, custos finais e motivos de
-recusa serão excluídos por poderem revelar o desfecho.
+recusa foram excluídos por poderem revelar o desfecho.
 
-Cada configuração será testada com regressão logística e floresta
-aleatória. A divisão estratificada reservará cerca de 80\% dos registros
-para treinamento e 20\% para teste, com a mesma partição em todas as
-comparações. O tratamento de valores ausentes, a codificação, o ajuste
-dos modelos e a escolha do limiar serão feitos na etapa de treinamento
-e validação.
+Na primeira rodada, sorteamos 100.000 solicitações elegíveis com a semente
+42. A divisão estratificada produziu partições de 60.000 solicitações
+para ajuste, 20.000 para validação e 20.000 para teste, compartilhadas por
+todas as combinações. O pré-processamento foi ajustado na primeira
+partição. As ausências numéricas foram preenchidas pela mediana, e as
+variáveis categóricas foram codificadas por indicadores. A regressão
+logística também usou padronização das variáveis numéricas. Cada limiar
+de aprovação foi escolhido pela acurácia balanceada na validação.
 
-\subsection{Plano de avaliação}
+\subsection{Avaliação}
 
-O desempenho geral será comparado por ROC-AUC, PR-AUC para recusas e
-acurácia balanceada. Por grupo demográfico e faixa de renda local,
-serão informados o número de pedidos, as taxas de aprovação observada
-e prevista e as taxas de falsos positivos e falsos negativos. A
-comparação principal aplicará, para cada modelo, o mesmo limiar a
+Medimos ROC-AUC, PR-AUC para recusas e acurácia balanceada no teste.
+Por grupo de raça, etnia e faixa de renda relativa do setor, calculamos o
+número de pedidos, as taxas de aprovação observada e prevista, a taxa de
+falsos positivos (FPR) e a taxa de falsos negativos (FNR). Para FPR e FNR,
+a classe positiva foi aprovação. Cada modelo aplicou o mesmo limiar a
 todos os grupos.
 
 \section{Resultados e discussão}
 
-\emph{A preencher após o experimento com o recorte final, o número de
-solicitações e a proporção de aprovações e recusas.}
+Dos 12.229.298 registros lidos, 3.794.116 atenderam aos critérios de
+elegibilidade, com 85,31\% de aprovações e 14,69\% de recusas. A
+Tabela~\ref{tab:resultados} apresenta a primeira rodada, realizada com
+uma amostra de 100 mil solicitações elegíveis. O conjunto de teste
+continha 17.063 aprovações e 2.937 recusas.
 
 \begin{table}[htbp]
 \centering
-\caption{Desempenho das configurações no conjunto de teste}
+\caption{Desempenho no teste de 20 mil solicitações da rodada de 100 mil}
 \label{tab:resultados}
 \small
 \begin{tabular}{@{}llccc@{}}
@@ -111,42 +118,148 @@ solicitações e a proporção de aprovações e recusas.}
 \textbf{Algoritmo} & \textbf{Config.} & \textbf{ROC-AUC} &
 \textbf{PR-AUC (recusa)} & \textbf{Acur. bal.} \\
 \hline
-Regressão logística & $A$       & -- & -- & -- \\
-Regressão logística & $A+B$     & -- & -- & -- \\
-Regressão logística & $A+C$     & -- & -- & -- \\
-Regressão logística & $A+B+C$   & -- & -- & -- \\
-Floresta aleatória  & $A$       & -- & -- & -- \\
-Floresta aleatória  & $A+B$     & -- & -- & -- \\
-Floresta aleatória  & $A+C$     & -- & -- & -- \\
-Floresta aleatória  & $A+B+C$   & -- & -- & -- \\
+Regressão logística & $A$       & 0,8645 & 0,6928 & 0,7875 \\
+Regressão logística & $A+B$     & 0,8690 & 0,6981 & 0,7928 \\
+Regressão logística & $A+C$     & 0,8649 & 0,6925 & 0,7878 \\
+Regressão logística & $A+B+C$   & 0,8697 & 0,6982 & 0,7908 \\
+Floresta aleatória  & $A$       & 0,8679 & 0,6845 & 0,7958 \\
+Floresta aleatória  & $A+B$     & 0,8700 & 0,6759 & 0,7981 \\
+Floresta aleatória  & $A+C$     & 0,8665 & 0,6739 & 0,7965 \\
+Floresta aleatória  & $A+B+C$   & 0,8704 & 0,6792 & 0,7997 \\
 \hline
 \end{tabular}
 \end{table}
 
-% Compare cada configuração com A. Destaque as diferenças nas taxas
-% de erro entre grupos e informe quantos pedidos há nos grupos citados.
+\begin{table}[htbp]
+\centering
+\caption{Desempenho no teste da rodada com o recorte integral}
+\label{tab:resultados-integral}
+\small
+\begin{tabular}{@{}llccc@{}}
+\hline
+\textbf{Algoritmo} & \textbf{Config.} & \textbf{ROC-AUC} &
+\textbf{PR-AUC (recusa)} & \textbf{Acur. bal.} \\
+\hline
+\IfFileExists{reports/local/full/artigo_metricas_linhas.tex}
+  {\input{reports/local/full/artigo_metricas_linhas.tex}}
+  {\IfFileExists{artigo_metricas_linhas.tex}
+    {\input{artigo_metricas_linhas.tex}}
+    {Pendente & -- & -- & -- & -- \\}}
+\hline
+\end{tabular}
+\end{table}
 
-A base pública oferece informações parciais sobre o histórico de crédito
-e os critérios internos das instituições. A renda local se refere à
-região do imóvel. As diferenças observadas serão interpretadas como
-associações no recorte estudado. As estimativas de grupos pequenos
-exigem cautela.
+Em relação a $A$, acrescentar raça e etnia elevou a ROC-AUC em 0,45
+ponto percentual na regressão e 0,21 na floresta. A PR-AUC para recusas
+subiu 0,52 ponto na regressão e caiu 0,86 na floresta. Acrescentar
+somente a renda relativa do setor alterou a ROC-AUC em $+0{,}04$ e
+$-0{,}14$ ponto percentual, respectivamente. A configuração completa
+teve a maior ROC-AUC nos dois algoritmos. A floresta completa obteve a
+maior acurácia balanceada (0,7997), e a regressão completa obteve a
+maior PR-AUC para recusas (0,6982).
 
-1Este estudo propõe avaliar se a inclusão de raça e etnia registradas e
-da renda relativa do setor censitário do imóvel altera o desempenho
-dos modelos na previsão de decisões históricas de financiamento
-imobiliário. A comparação das quatro configurações na mesma amostra
-de teste permitirá medir a contribuição preditiva desses atributos,
-separadamente e em conjunto, em relação à configuração de referência.
+Na regressão logística, ao passar de $A$ para $A+B+C$, a FPR do
+grupo \textit{Black or African American} caiu de 28,27\% para 20,34\%,
+enquanto a FNR subiu de 16,32\% para 28,66\%. O grupo reuniu 1.772
+solicitações, com 467 recusas e 1.305 aprovações observadas. Na floresta,
+ao passar de $A$ para $A+C$, a FPR dos setores com renda relativa abaixo
+de 80\% caiu de 35,64\% para 30,19\%, enquanto a FNR subiu de 12,75\%
+para 18,35\%. Esse grupo reuniu 3.933 solicitações.
 
-A análise das taxas de falsos positivos e falsos negativos por grupo
-demográfico e faixa de renda local permitirá verificar se diferenças
-no desempenho geral são acompanhadas por mudanças na distribuição dos
-erros. Como os dados públicos do HMDA cobrem apenas parte do histórico
-de crédito e dos critérios adotados pelas instituições, a interpretação
-dos resultados se limitará a associações no recorte estudado. A
-execução dos experimentos permitirá estimar a magnitude dessas
-diferenças e avaliar em quais grupos elas se concentram.
+As taxas de erro refletem os atributos usados e o limiar escolhido na
+validação de cada combinação. A base pública oferece informações parciais
+sobre o histórico de crédito e os critérios internos das instituições.
+Os resultados são descritivos e foram obtidos em uma única partição,
+sem estimativas de incerteza.
+
+\subsection{Sensibilidade das previsões em perfis fixos}
+
+Repetimos os mesmos 20.000 perfis de teste da rodada de 100 mil em
+cenários do modelo completo. Mantivemos os atributos financeiros e do
+imóvel fixos e variamos os rótulos de raça e etnia e a renda relativa
+do setor. Os valores de 67\% e 143\% correspondem às medianas na
+partição de ajuste para setores abaixo de 80\% e a partir de 120\%,
+respectivamente.
+
+Com etnia não latina e renda relativa de 67\%, a regressão logística
+classificou como aprovados 80,71\% dos perfis no cenário branco,
+66,27\% no cenário negro e 78,83\% no cenário indígena dos EUA/Alasca.
+Na floresta aleatória, as proporções foram 83,27\%, 77,24\% e 81,57\%.
+No cenário branco em setor de renda baixa, a troca para etnia latina
+reduziu as aprovações previstas em 6,26 pontos percentuais na regressão
+e 3,07 na floresta. Para o cenário negro e latino, a troca de setor de
+renda baixa para alta elevou a aprovação prevista de 55,75\% para
+61,14\% na regressão e de 75,04\% para 75,57\% na floresta. Essas
+diferenças medem a sensibilidade dos modelos aos cenários simulados.
+
+\IfFileExists{reports/local/full/artigo_perfis_fixos_integral.tex}
+  {\input{reports/local/full/artigo_perfis_fixos_integral.tex}}
+  {\IfFileExists{artigo_perfis_fixos_integral.tex}
+    {\input{artigo_perfis_fixos_integral.tex}}
+    {Os resultados destes cenários para o recorte integral estão pendentes.}}
+
+\section{Conclusão}
+
+Na rodada com 100 mil solicitações do HMDA 2024, os maiores ganhos
+globais sobre a configuração de referência ficaram abaixo de um ponto
+percentual. Em alguns grupos, as taxas de falsos positivos e falsos
+negativos mudaram mais e em direções opostas. Por exemplo, na regressão
+logística com todos os atributos, o grupo \textit{Black or African American}
+teve queda de FPR e aumento de FNR. A avaliação por grupo permite
+identificar essas mudanças nas previsões de decisões históricas.
+
+As Tabelas~\ref{tab:conclusao-100k} e~\ref{tab:conclusao-integral}
+resumem as diferenças entre grupos na configuração completa. Cada
+diferença representa a taxa do primeiro grupo menos a do grupo de
+referência, em pontos percentuais. Raça e etnia são dimensões distintas
+e podem se sobrepor. Os rótulos públicos do HMDA não oferecem um
+equivalente direto à categoria brasileira parda. As diferenças nas
+taxas descrevem o recorte e as previsões de cada modelo.
+
+\begin{table}[htbp]
+\centering
+\caption{Diferenças entre grupos na rodada de 100 mil, configuração $A+B+C$}
+\label{tab:conclusao-100k}
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}llrrrrr@{}}
+\hline
+Algoritmo & Comparação & $n$ grupo & $n$ ref. & Recusa obs. & Recusa prev. & FNR \\
+\hline
+Reg. logística & Negros / brancos     & 1772 & 13034 & +13,66 & +23,89 & +17,65 \\
+Reg. logística & Latinos / não latinos & 2961 & 13850 & +7,67 & +13,37 & +9,84 \\
+Floresta & Negros / brancos           & 1772 & 13034 & +13,66 & +14,72 & +6,84 \\
+Floresta & Latinos / não latinos      & 2961 & 13850 & +7,67 & +7,81 & +3,58 \\
+\hline
+\end{tabular}%
+}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Diferenças entre grupos no recorte integral, configuração $A+B+C$}
+\label{tab:conclusao-integral}
+\small
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}llrrrrr@{}}
+\hline
+Algoritmo & Comparação & $n$ grupo & $n$ ref. & Recusa obs. & Recusa prev. & FNR \\
+\hline
+\IfFileExists{reports/local/full/artigo_conclusao_linhas.tex}
+  {\input{reports/local/full/artigo_conclusao_linhas.tex}}
+  {\IfFileExists{artigo_conclusao_linhas.tex}
+    {\input{artigo_conclusao_linhas.tex}}
+    {Pendente & -- & -- & -- & -- & -- & -- \\}}
+\hline
+\end{tabular}%
+}
+\end{table}
+
+O protocolo ampliado inclui as 3.794.116 solicitações elegíveis,
+mantendo partições separadas de ajuste, validação e teste. A análise
+também compara as categorias em perfis fixos, alterando um rótulo
+por vez. Essa simulação mede a sensibilidade das previsões do modelo.
+
 \begingroup
 % O estilo SBC já imprime autor e ano no início de cada referência.
 \makeatletter
