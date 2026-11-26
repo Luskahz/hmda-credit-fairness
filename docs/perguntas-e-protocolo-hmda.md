@@ -44,4 +44,4 @@ O arquivo `perfis_pareados_cenarios.csv` mostra a probabilidade média de aprova
 
 O notebook 02 grava cinco contrastes selecionados para a apresentação em `perfis_pareados_resumo_apresentacao.csv`.
 
-O artigo contém uma tabela de desempenho e uma tabela de diferenças entre grupos da execução anterior. Os resultados do recorte com os 18 campos válidos e divisão 70/20/10 serão incorporados depois de confirmados nos relatórios.
+O [artigo](../artigo.tex) incorpora os resultados do recorte com os 18 campos válidos e divisão 70/20/10. A conclusão reúne as seis perguntas, a comparação usada para responder a cada uma e o que foi observado. Os números da execução anterior citados no início deste protocolo servem como registro histórico.

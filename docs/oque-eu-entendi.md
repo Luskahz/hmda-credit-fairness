@@ -105,42 +105,42 @@ Dá pra fazer o mesmo com raça e etnia. Pra olhar a mudança de raça, por exem
 
 ## Passo 6 — O que os gráficos respondem
 
-Pra ler os gráficos, primeiro precisamos saber de onde veio cada número. O notebook com a divisão 70/20/10 ainda estava treinando na hora da conferência. Já conseguimos contar as decisões que o banco registrou nos pedidos guardados para o teste atual. As barras de desempenho e os cenários simulados abaixo vêm da execução anterior, que usou um recorte diferente. [Contexto do projeto](contexto-projeto.md) · [Resultados anteriores](resultados-treinamento.md)
+Os gráficos abaixo usam os relatórios da divisão 70/20/10. O teste reuniu 291.065 pedidos com os 18 campos válidos. [Contexto do projeto](contexto-projeto.md) · [Resultados](resultados-treinamento.md)
 
 ### Acrescentar raça e etnia ajuda na previsão?
 
-![Barras de ROC-AUC, PR-AUC para recusas e acurácia balanceada por configuração e algoritmo na execução anterior](figuras-conclusao/desempenho-anterior.png)
+![Barras de ROC-AUC, PR-AUC para recusas e acurácia balanceada por configuração](figuras-conclusao/desempenho-valid18.png)
 
 Pra responder, procuramos as barras de **A** e **A+B** da mesma cor. Cada cor é um algoritmo. No gráfico da esquerda, a **ROC-AUC** indica se o modelo costuma colocar pedidos aprovados acima dos recusados quando os ordenamos pela chance de aprovação. No gráfico do meio, a **PR-AUC para recusas** mostra como o modelo se sai ao procurar pedidos recusados, considerando tanto quantos ele encontra quanto quantos dos que aponta são recusas de verdade. No gráfico da direita, a **acurácia balanceada** é a média de dois acertos. Um é a proporção de aprovados que o modelo acerta. O outro é a proporção de recusados que ele acerta. Nas três métricas, quanto maior a barra, melhor.
 
-Na execução anterior, com raça e etnia, a ROC-AUC foi de **0,8747 para 0,8777** na regressão e de **0,8597 para 0,8660** na floresta. As duas melhoraram um pouco. O gráfico mede a melhora geral. Pra saber quais grupos passaram a receber mais aprovações previstas ao incluir B, precisamos comparar as taxas de cada grupo em A e A+B. O gráfico de perfis fixos abaixo responde a uma pergunta mais específica, sobre o que acontece quando mudamos um campo na mesma ficha.
+Com raça e etnia, a ROC-AUC foi de 0,8611 para 0,8652 na regressão e de 0,8505 para 0,8555 na floresta. A diferença de recusas previstas entre pedidos de pessoas negras e brancas também aumentou. Na regressão, passou de 10,43 para 25,71 pontos. Na floresta, de 7,91 para 30,78 pontos.
 
 ### A renda da área acrescenta informação?
 
-No mesmo gráfico, comparamos **A com A+C**. Na execução anterior, a ROC-AUC foi de **0,8747 para 0,8750** na regressão e de **0,8597 para 0,8617** na floresta. As barras mostram que acrescentar só a renda da área fez pouca diferença na capacidade geral de ordenar os pedidos. Na floresta, a PR-AUC de recusas subiu de **0,6561 para 0,6655**. Na regressão, ficou praticamente igual.
+No mesmo gráfico, comparamos **A com A+C**. A ROC-AUC mudou pouco. Foi de 0,8611 para 0,8618 na regressão e de 0,8505 para 0,8515 na floresta. Na floresta, a PR-AUC de recusas subiu de 0,6091 para 0,6144.
 
 ### A mesma ficha recebe uma previsão diferente se mudarmos raça ou etnia?
 
-![Barras com a mudança nas aprovações previstas ao variar raça, etnia ou renda da área em perfis fixos na execução anterior](figuras-conclusao/perfis-fixos-anterior.png)
+![Mudança nas aprovações previstas nos cenários de perfis fixos](figuras-conclusao/perfis-fixos-valid18.png)
 
 Cada barra mostra quanto mudou a **porcentagem de fichas que o modelo classificou como aprovadas**, em pontos percentuais. A barra à esquerda do zero indica menos aprovações previstas. A barra à direita indica mais. Por exemplo, cair de 80% para 66% significa cair 14 pontos percentuais.
 
-Na execução anterior, quando trocamos a categoria branca pela categoria negra e seguramos as demais informações da ficha, houve queda de **14,58 pontos** na regressão e **12,01** na floresta. A troca de não latina para latina também reduziu as aprovações previstas, em **5,45** e **6,24 pontos**. Isso mostra como os modelos reagiram à troca, mantendo o restante fixo.
+Quando trocamos a categoria branca pela negra e mantivemos a etnia não latina e a área de renda baixa, as aprovações previstas caíram 18,24 pontos na regressão e 19,06 na floresta. Trocar de não latina para latina no cenário branco de renda baixa também reduziu as aprovações, em 7,70 e 5,81 pontos.
 
 ### A recusa de pedidos de pessoas negras aumenta em áreas de renda mais alta?
 
-![Taxa de recusa registrada por raça e faixa de renda da área no teste da divisão atual](figuras-conclusao/recusas-observadas-teste-atual.png)
+![Recusas registradas e previstas no grupo negro por faixa de renda da área](figuras-conclusao/recusas-raca-renda-valid18.png)
 
-Na parte de baixo do gráfico estão as quatro faixas de renda da área do imóvel. A altura da barra é a porcentagem de pedidos daquele grupo e daquela faixa que o banco registrou como recusados. O `n` acima da barra é a quantidade de pedidos usada pra calcular a porcentagem. Por exemplo, na faixa abaixo de 50%, foram 489 recusas entre 2.038 pedidos do grupo negro, ou **24,0%**.
+Embaixo estão as faixas de renda da área do imóvel. Cada faixa tem três barras. A primeira mostra a porcentagem de recusas registradas pelo banco. As outras mostram a porcentagem de recusas previstas por cada modelo com A+B+C. O número escrito como n mostra quantos pedidos havia naquela faixa.
 
-No **teste atual**, a taxa de recusa observada para o grupo negro passou de **24,0%** na faixa abaixo de 50% para **17,6%** na faixa de 120% ou mais. A taxa diminuiu ao subir de faixa e ficou acima da do grupo branco nas quatro faixas. Essas barras descrevem o histórico. A comparação de recusas **previstas** por faixa depende dos resultados do modelo atual.
+A recusa registrada passou de 24,00% na faixa abaixo de 50% para 17,60% na faixa de 120% ou mais. Nessa mesma comparação, a recusa prevista caiu de 51,28% para 37,31% na regressão e de 65,06% para 32,42% na floresta.
 
 ### O que aparece quando juntamos raça, etnia e renda da área?
 
-Voltamos ao gráfico de **perfis fixos**. No cenário negro e latino, trocar só a área de renda baixa pela de renda alta aumentou as aprovações previstas em **5,42 pontos** na regressão e **5,67** na floresta. A última comparação usa outra referência. Ela compara o cenário negro e latino em área de renda alta com o cenário branco, não latino, em área de renda baixa. Nesse caso, a diferença ficou em **−20,13** e **−14,54 pontos**, respectivamente. As duas comparações respondem a perguntas diferentes. Uma olha só a troca de área dentro do mesmo cenário. A outra compara duas fichas com combinações diferentes de raça, etnia e área. Isso mostra o comportamento dos modelos em conjunto. Um teste formal de interação exigiria comparar sistematicamente quanto muda o efeito de um campo quando variamos outro.
+Voltamos ao gráfico de **perfis fixos**. No cenário negro e latino, trocar a área de renda baixa pela de renda alta aumentou as aprovações previstas em cerca de sete pontos nos dois algoritmos. Mesmo em área de renda alta, a aprovação prevista nesse cenário ficou 23,81 pontos abaixo da referência branca, não latina e de renda baixa na regressão, e 17,60 pontos abaixo na floresta.
 
 ### Os resultados se repetem entre modelos, instituições e anos?
 
-O gráfico de desempenho permite comparar as duas cores na configuração **A+B+C**. Na execução anterior, a regressão teve **ROC-AUC de 0,8786** e a floresta, **0,8632**. O gráfico de perfis fixos mostra que alguns efeitos apontaram na mesma direção, mas tiveram tamanhos diferentes. A comparação por instituição ainda precisa ser feita separadamente. Pra responder sobre outros anos, precisamos repetir o teste com dados de outros períodos.
+Na configuração **A+B+C**, a regressão teve ROC-AUC de 0,8655 e a floresta, 0,8554. As duas apontaram quedas nas aprovações previstas em vários cenários, de tamanhos diferentes. A comparação por instituição ainda precisa ser feita separadamente. Pra falar de outros anos, precisamos de dados de outros períodos.
 
-Pra fechar o pitch, podemos dizer que acrescentar os campos mudou pouco algumas métricas gerais, mas produziu mudanças maiores nas previsões de alguns perfis na execução anterior. No teste atual, também observamos diferenças históricas de recusa entre os grupos e as faixas de renda. São medidas de decisões registradas e do comportamento do modelo. Elas não provam a causa de uma aprovação ou de uma recusa.
+Pra fechar o pitch, podemos dizer que acrescentar os campos mudou pouco algumas métricas gerais, mas mudou mais as previsões de alguns perfis. Esses números descrevem as decisões registradas e a reação dos modelos às fichas simuladas. [Tabela com as seis respostas no artigo](../artigo.tex)
