@@ -2,9 +2,9 @@
 
 Este guia acompanha o projeto de João Gabriel de Faria Beserra e Lucas Alves de Melo Lins, do IFSP Campus Caraguatatuba. Ele explica o caminho do CSV original até as tabelas e os gráficos que poderão ser usados no artigo e em uma apresentação da disciplina.
 
-As novas execuções usam os notebooks 02 e 03, com 100 mil pedidos e recorte integral, respectivamente. O [protocolo atualizado](perguntas-e-protocolo-hmda.md) explica as perguntas do Entregável 2 e como usar os gráficos de diferenças de recusa, as pizzas de composição e as simulações de perfis fixos na apresentação.
+O treinamento usa todos os pedidos elegíveis com os 18 campos válidos. O [protocolo](perguntas-e-protocolo-hmda.md) explica as perguntas do Entregável 2 e os gráficos para a apresentação.
 
-Para apresentar os cenários de perfis fixos nas duas escalas, use `comparacao_perfis_regressao.png` e `comparacao_perfis_floresta.png` gerados pelo notebook 03. As barras mostram mudanças nas aprovações previstas em pontos percentuais para cinco contrastes. Diga quais atributos mudaram e qual cenário foi usado como referência.
+Para apresentar os cenários de perfis fixos, use os gráficos `perfis_pareados_*.png` e o CSV `perfis_pareados_resumo_apresentacao.csv`. Explique quais atributos mudaram e qual cenário foi usado como referência.
 
 ## A pergunta que orienta o experimento
 
@@ -17,7 +17,7 @@ A unidade de análise é uma solicitação de financiamento. O modelo recebe atr
 1. Organizamos o manuscrito e os arquivos de bibliografia e formatação SBC no repositório `hmda-credit-fairness`.
 2. Baixamos e verificamos o snapshot nacional do HMDA de 2024, congelado em 19/05/2025. O CSV extraído tem 99 colunas e cerca de 4,6 GB. A fonte, a versão e o SHA-256 do ZIP original estão registrados na documentação. [Proveniência dos dados](data-provenance.md)
 3. Criamos o ambiente local `.venv` com Python 3.12.16. O pandas lê e transforma os dados, o PyArrow grava e lê o Parquet, o scikit-learn ajusta os modelos e o Matplotlib gera os gráficos. O JupyterLab permite executar os notebooks no PC.
-4. Criamos dois notebooks para rodar no PC ou no Colab. O fluxo foi testado localmente com 12 mil linhas reais, usando uma configuração reduzida. O teste verificou o preparo, as oito combinações, a exportação das métricas e a geração dos gráficos. A execução local com o CSV completo foi interrompida durante o preparo para que o usuário pudesse rodar o fluxo no próprio terminal.
+4. O notebook 01 prepara a base e o notebook 02 treina as oito combinações. O fluxo integral foi executado localmente e gerou as métricas e os gráficos.
 
 ## Notebook 01 — da base bruta ao recorte
 
@@ -33,11 +33,11 @@ O notebook lê o CSV em blocos de 100 mil linhas e seleciona somente as colunas 
 
 Idade e razão dívida/renda são tratadas como categorias porque o LAR público inclui faixas nesses campos. As colunas numéricas são convertidas para tipos adequados e a renda relativa do setor é marcada como ausente quando não é positiva. Usamos as categorias agregadas de raça e etnia publicadas pelo HMDA, que podem refletir dados do solicitante e do co-solicitante.
 
-O notebook valida se o recorte tem as duas classes, confere se o número de linhas gravadas bate com as contagens e cria `data/processed/hmda_2024_purchase.parquet`. Também exporta CSVs com contagens por etapa, ações registradas, distribuição do alvo, ausências e composição dos grupos demográficos. Essas tabelas respondem quantos registros entraram no estudo e como o recorte ficou composto. [Notebook 01](../notebooks/01_validacao_e_preparo.ipynb)
+O notebook aplica a auditoria dos 18 campos aos pedidos elegíveis, confere se as duas classes estão presentes e grava `data/processed/valid_18/hmda_2024_purchase_valid18.parquet`. Na mesma pasta, exporta as contagens por etapa, os campos inválidos ou indisponíveis e a composição do recorte validado. No Colab, o notebook 01 também precisa de `scripts/contar_linhas_completas.py` na pasta do projeto. [Notebook 01](../notebooks/01_validacao_e_preparo.ipynb)
 
-## Notebooks 02 e 03 — como os modelos aprendem
+## Notebook 02 — como os modelos aprendem
 
-Na primeira rodada, sorteamos **100 mil solicitações elegíveis** com a semente **42**. O sorteio percorreu todo o Parquet. Para a próxima rodada, o notebook está configurado com `SAMPLE_SIZE = None` para incluir as **3.794.116 solicitações elegíveis**. Nos dois modos, as divisões estratificadas destinam aproximadamente 60% ao **ajuste**, 20% à **validação** e 20% ao **teste**. Todos os modelos usam as mesmas solicitações em cada partição. A execução completa grava os relatórios em `reports/local/full` no PC e `reports/colab/full` no Drive.
+O notebook usa as **2.910.642 solicitações elegíveis com os 18 campos válidos** e a semente **42**. A divisão estratificada reserva aproximadamente 70% para ajuste, 20% para validação e 10% para teste. Os modelos compartilham essas partições. Os relatórios ficam em `reports/local/full_valid18_702010` no PC e `reports/colab/full_valid18_702010` no Drive.
 
 | Configuração | Dados usados para prever |
 | --- | --- |
@@ -48,10 +48,10 @@ Na primeira rodada, sorteamos **100 mil solicitações elegíveis** com a sement
 
 Para comparar o efeito das variáveis, partimos de A. Por exemplo, **A+B menos A** mede a mudança na métrica ao acrescentar raça e etnia para o mesmo algoritmo. Campos ligados ao desfecho, como juros, custos finais e motivos de recusa, ficam fora das entradas para evitar vazamento de informação.
 
-1. **Pré-processamento.** Calculamos a mediana das variáveis numéricas na partição de ajuste e usamos esse valor para preencher ausências. Na regressão logística, também padronizamos essas variáveis. Nas categóricas, representamos ausências, aplicamos one-hot encoding e agrupamos categorias raras segundo a frequência no ajuste. A transformação aprende essas regras uma vez e as reaplica na validação e no teste.
+1. **Pré-processamento.** A regressão logística padroniza as variáveis numéricas. As categóricas são codificadas e as categorias raras são agrupadas pela frequência no ajuste. As transformações são aprendidas no ajuste e reaplicadas na validação e no teste. Os campos já chegam válidos do preparo, então o notebook dispensa imputação.
 2. **Ajuste.** A regressão logística combina os atributos para estimar a probabilidade de aprovação. A floresta aleatória combina previsões de várias árvores de decisão. Rodamos ambos os algoritmos para cada configuração, somando oito ajustes.
 3. **Validação.** Cada ajuste produz uma probabilidade. Escolhemos na validação o limiar de aprovação que maximiza a acurácia balanceada. Quanto menor o limiar, mais pedidos tendem a ser classificados como aprovados. Cada combinação tem seu próprio limiar, aplicado igualmente a todos os grupos.
-4. **Teste.** Usamos os modelos já ajustados e os limiares já escolhidos para gerar as métricas finais na partição reservada. [Rodada de 100 mil](../notebooks/02_treinamento_100k.ipynb) e [rodada integral](../notebooks/03_treinamento_recorte_integral.ipynb)
+4. **Teste.** Usamos os modelos já ajustados e os limiares já escolhidos para gerar as métricas finais na partição reservada. [Notebook 02](../notebooks/02_treinamento_recorte_integral.ipynb)
 
 ## Como interpretar os resultados
 
@@ -63,7 +63,7 @@ Para comparar o efeito das variáveis, partimos de A. Por exemplo, **A+B menos A
 | FPR por grupo | Entre os pedidos recusados na decisão histórica, quantos foram previstos como aprovados? |
 | FNR por grupo | Entre os pedidos aprovados na decisão histórica, quantos foram previstos como recusados? |
 
-A avaliação por grupo mostra também o tamanho de cada grupo e as taxas de aprovação observada e prevista. A raça, a etnia e a renda relativa são avaliadas separadamente. As faixas propostas para a renda do setor são **abaixo de 80%**, **de 80% até menos de 120%** e **120% ou mais**. Compare FPR e FNR com seus denominadores, especialmente quando há poucas recusas ou aprovações no grupo. Quando o denominador de uma taxa é zero, o valor fica em branco no CSV.
+A avaliação por grupo mostra também o tamanho de cada grupo e as taxas de aprovação observada e prevista. A raça, a etnia e a renda relativa são avaliadas separadamente. As faixas propostas para a renda do setor são **abaixo de 50%**, **de 50% até menos de 80%**, **de 80% até menos de 120%** e **120% ou mais**. Compare FPR e FNR com seus denominadores, especialmente quando há poucas recusas ou aprovações no grupo. Quando o denominador de uma taxa é zero, o valor fica em branco no CSV.
 
 ## Como executar e localizar os arquivos
 
@@ -75,13 +75,13 @@ cd /d "%USERPROFILE%\Documents\artigo"
 python -m jupyterlab
 ```
 
-Se o Parquet ainda não existir, execute o notebook 01 até aparecer **Parquet pronto**. Execute o notebook 02 para a rodada de 100 mil e o 03 para a rodada integral. Os dois podem rodar em qualquer ordem. No Colab, ajuste o caminho do CSV na célula de configuração caso ele esteja em outra pasta do Drive. No PC, os relatórios ficam em `reports/local/100k` e `reports/local/full`. No Colab, as mesmas subpastas ficam em `reports/colab` no Drive.
+Se o Parquet ainda não existir, execute o notebook 01 até aparecer **Parquet pronto**. Depois, execute o notebook 02. No Colab, ajuste o caminho do CSV se ele estiver em outra pasta do Drive.
 
 | Saída | Uso no artigo ou na apresentação |
 | --- | --- |
 | `validacao_etapas.csv` e `validacao_alvo.csv` | Mostrar o fluxo dos filtros e a distribuição de aprovações e recusas. |
-| `validacao_ausencias.csv` | Explicar o tratamento das informações ausentes. |
-| `particoes.csv` e `execucao.json` | Registrar tamanho da amostra, divisão, semente e parâmetros da rodada. |
+| `validacao_invalidos_por_campo.csv` | Mostrar os campos inválidos ou indisponíveis que levaram à exclusão de pedidos. |
+| `particoes.csv` e `execucao.json` | Registrar tamanho do recorte, divisão, semente e parâmetros. |
 | `metricas_gerais.csv` e `metricas_gerais.png` | Comparar as oito combinações e preencher a tabela do artigo. |
 | `metricas_por_grupo.csv` e `erros_*.png` | Examinar diferenças de FPR e FNR com as contagens de cada grupo. |
 
@@ -92,14 +92,16 @@ Se o Parquet ainda não existir, execute o notebook 01 até aparecer **Parquet p
 | 1. Pergunta | O que muda quando acrescentamos raça, etnia e renda do setor às previsões? | Título, autores e pergunta de pesquisa. |
 | 2. Dados e recorte | De onde vêm os registros e como a decisão vira o alvo. | Fonte oficial e contagens por etapa do notebook 01. |
 | 3. Desenho da comparação | O que A, A+B, A+C e A+B+C acrescentam. | Tabela das configurações. |
-| 4. Treinamento e validação | Como a mesma amostra é dividida e como o limiar é escolhido. | Diagrama com ajuste, validação e teste e contagens de cada partição. |
+| 4. Treinamento e validação | Como o recorte é dividido e como o limiar é escolhido. | Diagrama com ajuste, validação e teste e contagens de cada partição. |
 | 5. Desempenho geral | Quanto as métricas mudaram em relação a A dentro de cada algoritmo. | Gráfico geral e diferenças calculadas a partir do CSV. |
 | 6. Erros por grupo | Onde FPR e FNR mudaram e quantos pedidos sustentam cada taxa. | Um gráfico com os grupos mais informativos e seus denominadores. |
-| 7. Conclusão | Resposta à pergunta de pesquisa, com o recorte e as limitações da base. | Resultados da rodada escolhida para o artigo. |
+| 7. Conclusão | Resposta à pergunta de pesquisa, com o recorte e as limitações da base. | Resultados do recorte integral. |
 
-### Texto para os slides da primeira rodada
+### Resultados anteriores para os slides
 
-- **Dados e partições.** 3.794.116 pedidos elegíveis no HMDA 2024. Nesta rodada, foram sorteados 100.000. Usamos 60.000 para ajuste, 20.000 para validação e 20.000 para teste.
-- **Desempenho geral.** No teste de 20 mil pedidos, a floresta A+B+C alcançou ROC-AUC de 0,8704 e acurácia balanceada de 79,97%. A regressão A+B+C teve a maior PR-AUC para recusas, de 0,6982. Os melhores ganhos sobre A ficaram abaixo de um ponto percentual.
-- **Erros por grupo.** Na regressão A+B+C, entre os 1.772 pedidos da categoria *Black or African American*, a FPR caiu de 28,27% para 20,34% e a FNR subiu de 16,32% para 28,66%, em relação a A.
-- **Conclusão e próxima rodada.** A primeira rodada mostrou mudanças maiores nos erros de alguns grupos do que nas métricas gerais. A próxima rodada incluirá todo o recorte elegível, com aproximadamente 60% para ajuste, 20% para validação e 20% para teste. [Tabela e análise da rodada de 100 mil](resultados-treinamento.md)
+Os números abaixo descrevem o recorte anterior, que mantinha pedidos elegíveis com campos indisponíveis. Substitua-os pelos resultados de `reports/local/full_valid18_702010` após treinar com o recorte validado.
+
+- **Dados e partições.** O recorte de 3.794.116 pedidos foi dividido em 2.276.469 para ajuste, 758.823 para validação e 758.824 para teste.
+- **Desempenho geral.** A regressão logística A+B+C liderou as três métricas no teste, com ROC-AUC de 0,8786, PR-AUC para recusas de 0,7129 e acurácia balanceada de 80,32%.
+- **Erros por grupo.** A diferença de recusas previstas entre negros e brancos foi de 24,00 pontos percentuais na regressão e 19,49 na floresta, na configuração A+B+C.
+- **Perfis fixos.** No cenário negro e latino, trocar o setor de renda baixa pelo de renda alta elevou as aprovações previstas em 5,42 pontos na regressão e 5,67 na floresta. [Resultados](resultados-treinamento.md)

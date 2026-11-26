@@ -28,12 +28,12 @@ aprovação de financiamento imobiliário}
 \begin{resumo}
 Este estudo compara regressão logística e floresta aleatória na previsão
 de decisões históricas de financiamento imobiliário, com dados públicos
-do Home Mortgage Disclosure Act de 2024. A primeira rodada usou uma amostra
-de 100 mil das 3.794.116 solicitações elegíveis e comparou quatro
-configurações de atributos em um teste comum de 20 mil solicitações.
-A inclusão de raça, etnia e renda relativa do setor censitário gerou
-ganhos globais inferiores a um ponto percentual em relação à referência,
-com mudanças mais pronunciadas nas taxas de erro de alguns grupos.
+do Home Mortgage Disclosure Act de 2024. Avaliamos quatro configurações
+por algoritmo nas 3.794.116 solicitações elegíveis. A regressão
+logística com todos os atributos liderou as três métricas no teste,
+com ROC-AUC de 0,8786. As simulações com perfis fixos mostraram
+diferenças nas aprovações previstas conforme a raça, a etnia e a
+renda relativa do setor censitário.
 \end{resumo}
 
 \section{Introdução}
@@ -61,6 +61,12 @@ mesma amostra de teste para as oito combinações.
 
 \section{Metodologia}
 
+Os resultados deste manuscrito correspondem à execução anterior,
+identificada pelas partições descritas abaixo. O protocolo atualizado
+seleciona os pedidos com os 18 campos válidos e prevê uma divisão de
+70\% para treinamento, 20\% para validação e 10\% para teste. As
+métricas dessa nova divisão dependem de uma nova execução.
+
 \subsection{Dados e definição de aprovação}
 
 A unidade de análise é a solicitação de financiamento. Usamos o snapshot
@@ -70,6 +76,27 @@ define o desfecho. Os códigos 1 (financiamento contratado) e 2 (pedido
 aprovado, mas não aceito) formam a classe de aprovação. O código 3
 identifica as recusas. Os demais desfechos ficam fora da
 análise~\cite{ffiec:lar}.
+
+\subsection{Auditoria dos campos}
+
+Das 99 colunas do CSV, lemos 18 para o estudo. No CSV bruto, das
+12.229.298 linhas, 5.998.031 (49,05\%) tinham valores válidos nos 18
+campos, e 6.231.267 tinham pelo menos um campo inválido ou
+indisponível. Após os filtros de elegibilidade, das 3.794.116
+solicitações, 2.910.642 (76,71\%) tinham os 18 campos válidos e
+883.474 (23,29\%) apresentavam pelo menos um valor inválido ou
+indisponível segundo as regras da auditoria.
+
+No recorte elegível, os campos com mais valores inválidos ou
+indisponíveis foram \texttt{derived\_race} (544.974),
+\texttt{derived\_ethnicity} (486.044), \texttt{property\_value}
+(140.683), \texttt{debt\_to\_income\_ratio} (118.947),
+\texttt{tract\_to\_msa\_income\_percentage} (99.941),
+\texttt{loan\_term} (88.533), \texttt{income} (28.908) e
+\texttt{applicant\_age} (2.118). Um mesmo pedido pode aparecer em
+mais de uma dessas contagens. A auditoria mede a completude dos dados.
+A rodada integral usou todas as solicitações elegíveis e aplicou o
+pré-processamento descrito a seguir.
 
 \subsection{Variáveis e treinamento}
 
@@ -82,11 +109,11 @@ região de referência. A configuração $A+B+C$ reúne os dois grupos de
 variáveis~\cite{ffiec:lar,ffiec:censo}. Juros, custos finais e motivos de
 recusa foram excluídos por poderem revelar o desfecho.
 
-Na primeira rodada, sorteamos 100.000 solicitações elegíveis com a semente
-42. A divisão estratificada produziu partições de 60.000 solicitações
-para ajuste, 20.000 para validação e 20.000 para teste, compartilhadas por
-todas as combinações. O pré-processamento foi ajustado na primeira
-partição. As ausências numéricas foram preenchidas pela mediana, e as
+Com a semente 42, dividimos o recorte integral de forma estratificada
+em 2.276.469 solicitações para ajuste, 758.823 para validação e
+758.824 para teste. As oito combinações compartilharam essas
+partições. O pré-processamento foi ajustado na
+partição de ajuste. As ausências numéricas foram preenchidas pela mediana, e as
 variáveis categóricas foram codificadas por indicadores. A regressão
 logística também usou padronização das variáveis numéricas. Cada limiar
 de aprovação foi escolhido pela acurácia balanceada na validação.
@@ -103,32 +130,9 @@ todos os grupos.
 \section{Resultados e discussão}
 
 Dos 12.229.298 registros lidos, 3.794.116 atenderam aos critérios de
-elegibilidade, com 85,31\% de aprovações e 14,69\% de recusas. A
-Tabela~\ref{tab:resultados} apresenta a primeira rodada, realizada com
-uma amostra de 100 mil solicitações elegíveis. O conjunto de teste
-continha 17.063 aprovações e 2.937 recusas.
-
-\begin{table}[htbp]
-\centering
-\caption{Desempenho no teste de 20 mil solicitações da rodada de 100 mil}
-\label{tab:resultados}
-\small
-\begin{tabular}{@{}llccc@{}}
-\hline
-\textbf{Algoritmo} & \textbf{Config.} & \textbf{ROC-AUC} &
-\textbf{PR-AUC (recusa)} & \textbf{Acur. bal.} \\
-\hline
-Regressão logística & $A$       & 0,8645 & 0,6928 & 0,7875 \\
-Regressão logística & $A+B$     & 0,8690 & 0,6981 & 0,7928 \\
-Regressão logística & $A+C$     & 0,8649 & 0,6925 & 0,7878 \\
-Regressão logística & $A+B+C$   & 0,8697 & 0,6982 & 0,7908 \\
-Floresta aleatória  & $A$       & 0,8679 & 0,6845 & 0,7958 \\
-Floresta aleatória  & $A+B$     & 0,8700 & 0,6759 & 0,7981 \\
-Floresta aleatória  & $A+C$     & 0,8665 & 0,6739 & 0,7965 \\
-Floresta aleatória  & $A+B+C$   & 0,8704 & 0,6792 & 0,7997 \\
-\hline
-\end{tabular}
-\end{table}
+elegibilidade, com 85,31\% de aprovações e 14,69\% de recusas.
+A Tabela~\ref{tab:resultados-integral} apresenta os resultados do
+teste, que reuniu 647.321 aprovações e 111.503 recusas.
 
 \begin{table}[htbp]
 \centering
@@ -140,31 +144,24 @@ Floresta aleatória  & $A+B+C$   & 0,8704 & 0,6792 & 0,7997 \\
 \textbf{Algoritmo} & \textbf{Config.} & \textbf{ROC-AUC} &
 \textbf{PR-AUC (recusa)} & \textbf{Acur. bal.} \\
 \hline
-\IfFileExists{reports/local/full/artigo_metricas_linhas.tex}
-  {\input{reports/local/full/artigo_metricas_linhas.tex}}
-  {\IfFileExists{artigo_metricas_linhas.tex}
-    {\input{artigo_metricas_linhas.tex}}
-    {Pendente & -- & -- & -- & -- \\}}
+Regressão logística & $A$     & 0,8747 & 0,7086 & 0,8011 \\
+Regressão logística & $A+B$   & 0,8777 & 0,7119 & 0,8027 \\
+Regressão logística & $A+C$   & 0,8750 & 0,7082 & 0,8003 \\
+Regressão logística & $A+B+C$ & 0,8786 & 0,7129 & 0,8032 \\
+Floresta aleatória  & $A$     & 0,8597 & 0,6561 & 0,7913 \\
+Floresta aleatória  & $A+B$   & 0,8660 & 0,6645 & 0,7989 \\
+Floresta aleatória  & $A+C$   & 0,8617 & 0,6655 & 0,7937 \\
+Floresta aleatória  & $A+B+C$ & 0,8632 & 0,6571 & 0,7950 \\
 \hline
 \end{tabular}
 \end{table}
 
-Em relação a $A$, acrescentar raça e etnia elevou a ROC-AUC em 0,45
-ponto percentual na regressão e 0,21 na floresta. A PR-AUC para recusas
-subiu 0,52 ponto na regressão e caiu 0,86 na floresta. Acrescentar
-somente a renda relativa do setor alterou a ROC-AUC em $+0{,}04$ e
-$-0{,}14$ ponto percentual, respectivamente. A configuração completa
-teve a maior ROC-AUC nos dois algoritmos. A floresta completa obteve a
-maior acurácia balanceada (0,7997), e a regressão completa obteve a
-maior PR-AUC para recusas (0,6982).
-
-Na regressão logística, ao passar de $A$ para $A+B+C$, a FPR do
-grupo \textit{Black or African American} caiu de 28,27\% para 20,34\%,
-enquanto a FNR subiu de 16,32\% para 28,66\%. O grupo reuniu 1.772
-solicitações, com 467 recusas e 1.305 aprovações observadas. Na floresta,
-ao passar de $A$ para $A+C$, a FPR dos setores com renda relativa abaixo
-de 80\% caiu de 35,64\% para 30,19\%, enquanto a FNR subiu de 12,75\%
-para 18,35\%. Esse grupo reuniu 3.933 solicitações.
+Na rodada integral, a regressão $A+B+C$ obteve a maior ROC-AUC
+(0,8786), PR-AUC para recusas (0,7129) e acurácia balanceada (0,8032).
+Na floresta, $A+B$ obteve a maior ROC-AUC (0,8660) e acurácia balanceada
+(0,7989), e $A+C$ obteve a maior PR-AUC para recusas (0,6655). Na
+regressão, acrescentar somente renda do setor produziu pouca mudança
+nas três métricas.
 
 As taxas de erro refletem os atributos usados e o limiar escolhido na
 validação de cada combinação. A base pública oferece informações parciais
@@ -174,66 +171,42 @@ sem estimativas de incerteza.
 
 \subsection{Sensibilidade das previsões em perfis fixos}
 
-Repetimos os mesmos 20.000 perfis de teste da rodada de 100 mil em
-cenários do modelo completo. Mantivemos os atributos financeiros e do
-imóvel fixos e variamos os rótulos de raça e etnia e a renda relativa
-do setor. Os valores de 67\% e 143\% correspondem às medianas na
-partição de ajuste para setores abaixo de 80\% e a partir de 120\%,
-respectivamente.
+Sorteamos 20.000 perfis da partição de teste para a simulação da
+configuração completa. Mantivemos fixos os atributos financeiros e
+do imóvel e variamos os rótulos de raça e etnia e a renda relativa
+do setor. Os valores de 67\% e 143\% representaram os cenários de
+renda relativa baixa e alta, respectivamente.
 
-Com etnia não latina e renda relativa de 67\%, a regressão logística
-classificou como aprovados 80,71\% dos perfis no cenário branco,
-66,27\% no cenário negro e 78,83\% no cenário indígena dos EUA/Alasca.
-Na floresta aleatória, as proporções foram 83,27\%, 77,24\% e 81,57\%.
-No cenário branco em setor de renda baixa, a troca para etnia latina
-reduziu as aprovações previstas em 6,26 pontos percentuais na regressão
-e 3,07 na floresta. Para o cenário negro e latino, a troca de setor de
-renda baixa para alta elevou a aprovação prevista de 55,75\% para
-61,14\% na regressão e de 75,04\% para 75,57\% na floresta. Essas
-diferenças medem a sensibilidade dos modelos aos cenários simulados.
+No setor de renda baixa,
+a troca de branca para negra, mantendo etnia não latina, reduziu
+as aprovações previstas em 14,58 pontos percentuais na regressão
+e 12,01 na floresta. A troca de branca para indígena dos EUA/Alasca
+reduziu as taxas em 5,96 e 5,80 pontos, respectivamente. Para o
+cenário branco, a troca de etnia não latina para latina reduziu as
+taxas em 5,45 e 6,24 pontos.
 
-\IfFileExists{reports/local/full/artigo_perfis_fixos_integral.tex}
-  {\input{reports/local/full/artigo_perfis_fixos_integral.tex}}
-  {\IfFileExists{artigo_perfis_fixos_integral.tex}
-    {\input{artigo_perfis_fixos_integral.tex}}
-    {Os resultados destes cenários para o recorte integral estão pendentes.}}
+No cenário negro e latino, mudar do setor de renda baixa para o de
+renda alta aumentou as aprovações previstas em 5,42 pontos na regressão
+e 5,67 na floresta. Mesmo no setor de renda alta, o cenário negro e
+latino ficou 20,13 pontos abaixo da referência branca, não latina e
+de renda baixa na regressão e 14,54 pontos abaixo na floresta. Os
+mesmos perfis foram usados em todos os cenários.
 
 \section{Conclusão}
 
-Na rodada com 100 mil solicitações do HMDA 2024, os maiores ganhos
-globais sobre a configuração de referência ficaram abaixo de um ponto
-percentual. Em alguns grupos, as taxas de falsos positivos e falsos
-negativos mudaram mais e em direções opostas. Por exemplo, na regressão
-logística com todos os atributos, o grupo \textit{Black or African American}
-teve queda de FPR e aumento de FNR. A avaliação por grupo permite
-identificar essas mudanças nas previsões de decisões históricas.
+Os maiores ganhos globais sobre a configuração de referência
+ficaram abaixo de um ponto percentual. As disparidades entre
+grupos foram maiores. Na configuração completa, a diferença de
+recusas previstas entre negros e brancos foi de 24,00 pontos
+percentuais na regressão logística e de 19,49 na floresta.
 
-As Tabelas~\ref{tab:conclusao-100k} e~\ref{tab:conclusao-integral}
-resumem as diferenças entre grupos na configuração completa. Cada
+A Tabela~\ref{tab:conclusao-integral}
+resume as diferenças entre grupos na configuração completa. Cada
 diferença representa a taxa do primeiro grupo menos a do grupo de
 referência, em pontos percentuais. Raça e etnia são dimensões distintas
 e podem se sobrepor. Os rótulos públicos do HMDA não oferecem um
 equivalente direto à categoria brasileira parda. As diferenças nas
 taxas descrevem o recorte e as previsões de cada modelo.
-
-\begin{table}[htbp]
-\centering
-\caption{Diferenças entre grupos na rodada de 100 mil, configuração $A+B+C$}
-\label{tab:conclusao-100k}
-\small
-\resizebox{\linewidth}{!}{%
-\begin{tabular}{@{}llrrrrr@{}}
-\hline
-Algoritmo & Comparação & $n$ grupo & $n$ ref. & Recusa obs. & Recusa prev. & FNR \\
-\hline
-Reg. logística & Negros / brancos     & 1772 & 13034 & +13,66 & +23,89 & +17,65 \\
-Reg. logística & Latinos / não latinos & 2961 & 13850 & +7,67 & +13,37 & +9,84 \\
-Floresta & Negros / brancos           & 1772 & 13034 & +13,66 & +14,72 & +6,84 \\
-Floresta & Latinos / não latinos      & 2961 & 13850 & +7,67 & +7,81 & +3,58 \\
-\hline
-\end{tabular}%
-}
-\end{table}
 
 \begin{table}[htbp]
 \centering
@@ -245,20 +218,20 @@ Floresta & Latinos / não latinos      & 2961 & 13850 & +7,67 & +7,81 & +3,58 \\
 \hline
 Algoritmo & Comparação & $n$ grupo & $n$ ref. & Recusa obs. & Recusa prev. & FNR \\
 \hline
-\IfFileExists{reports/local/full/artigo_conclusao_linhas.tex}
-  {\input{reports/local/full/artigo_conclusao_linhas.tex}}
-  {\IfFileExists{artigo_conclusao_linhas.tex}
-    {\input{artigo_conclusao_linhas.tex}}
-    {Pendente & -- & -- & -- & -- & -- & -- \\}}
+Reg. logística & Negros / brancos      & 69351  & 495647 & +12,95 & +24,00 & +17,96 \\
+Reg. logística & Latinos / não latinos & 114332 & 522900 & +7,05  & +13,92 & +10,32 \\
+Floresta & Negros / brancos            & 69351  & 495647 & +12,95 & +19,49 & +13,10 \\
+Floresta & Latinos / não latinos       & 114332 & 522900 & +7,05  & +9,91  & +6,15 \\
 \hline
 \end{tabular}%
 }
 \end{table}
 
-O protocolo ampliado inclui as 3.794.116 solicitações elegíveis,
-mantendo partições separadas de ajuste, validação e teste. A análise
-também compara as categorias em perfis fixos, alterando um rótulo
-por vez. Essa simulação mede a sensibilidade das previsões do modelo.
+Em ambos os algoritmos, a simulação mostrou que os rótulos
+demográficos e a renda relativa do setor alteram as previsões mesmo
+com o restante do perfil fixo. O ganho previsto ao passar para um
+setor de renda alta no cenário negro e latino variou por algoritmo. Os resultados descrevem a sensibilidade dos modelos a esses
+cenários e as disparidades nas decisões históricas do recorte.
 
 \begingroup
 % O estilo SBC já imprime autor e ano no início de cada referência.
