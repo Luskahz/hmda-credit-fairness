@@ -26,6 +26,7 @@ Thumbs.db
 !/data/processed/hmda_multiano/
 /data/processed/hmda_multiano/*
 !/data/processed/hmda_multiano/hmda_[0-9][0-9][0-9][0-9]_valid18.parquet
+!/data/processed/hmda_multiano/particoes_por_ano.csv
 /reports/local/
 /reports/colab/
 
