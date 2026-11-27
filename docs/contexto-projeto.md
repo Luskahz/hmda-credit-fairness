@@ -85,3 +85,5 @@ Parquet é um formato de arquivo para tabelas que armazena os dados por coluna, 
 Para transferir a base preparada entre computadores pelo Git, o .gitignore libera os Parquets anuais finais em `data/processed/hmda_multiano/`. Os ZIPs brutos, arquivos parciais e relatórios locais seguem ignorados. Na conferência, estavam disponíveis os Parquets de 2018, 2019 e 2020. Para rodar o notebook 04 com todos os anos em outro computador, leve também os demais Parquets depois de concluir o notebook 03.
 
 O notebook 03 usa `zipfile.ZipFile` para abrir o CSV dentro de cada ZIP. O Python descompacta o conteúdo conforme lê, e o pandas entrega as linhas em blocos para aplicar os filtros e a validação. Assim, o preparo grava o Parquet anual sem criar uma cópia do CSV bruto no disco.
+
+Para a rodada multiano, execute o notebook 03 para gerar os Parquets anuais e as contagens de partição. O notebook 04 usa os pedidos de 2018 a 2025 para treinar as combinações A, A+B, A+C e A+B+C, com avaliação geral e por ano. O notebook 02 lê somente o Parquet histórico de 2024.
