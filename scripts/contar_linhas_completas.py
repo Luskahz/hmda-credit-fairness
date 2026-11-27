@@ -45,9 +45,10 @@ CATEGORIES = {
 }
 
 
-def valid_fields(chunk):
+def valid_fields(chunk, *, year=2024):
     valid = {name: chunk[name].isin(values).to_numpy(dtype=bool)
              for name, values in CATEGORIES.items()}
+    valid["activity_year"] = chunk["activity_year"].eq(str(year)).to_numpy(dtype=bool)
     valid["lei"] = chunk["lei"].str.fullmatch(r"[A-Z0-9]{20}").to_numpy(dtype=bool)
     for name in NUMERIC:
         numeric = pd.to_numeric(chunk[name], errors="coerce").to_numpy(dtype=float)

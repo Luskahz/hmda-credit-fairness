@@ -205,7 +205,7 @@ Floresta & $A+B+C$ & 0,8554 & 0,6089 & 0,7845 \\
 \end{tabular}
 \end{table}
 
-\graficoresultado{desempenho-valid18.png}{Desempenho no teste por algoritmo e configuração. As barras mais altas indicam maior desempenho na métrica do painel.}{fig:desempenho}
+\graficoresultado{desempenho-valid18.png}{Como os modelos se saíram no teste? Cada cor identifica um modelo. Compare as barras da mesma cor para ver o que muda ao acrescentar raça e etnia (B), renda da área do imóvel (C) ou ambos ao conjunto de referência (A). Em cada painel, quanto maior a nota, melhor o desempenho naquela medida.}{fig:desempenho}
 
 Na regressão, A+B+C obteve a maior ROC-AUC (0,8655) e PR-AUC para
 recusas (0,6513). A maior acurácia balanceada foi a da regressão
@@ -260,7 +260,7 @@ faixas em ambos os modelos. A comparação agrupa pedidos diferentes
 em cada faixa. A Figura~\ref{fig:recusas} mostra também o número de
 pedidos que sustenta cada taxa.
 
-\graficoresultado{recusas-raca-renda-valid18.png}{Recusas registradas e previstas por A+B+C no grupo \textit{Black or African American}. Os números no eixo horizontal indicam a faixa de renda relativa e o tamanho do grupo naquela faixa.}{fig:recusas}
+\graficoresultado{recusas-raca-renda-valid18.png}{Quantos pedidos de pessoas negras foram recusados? Em cada faixa de renda da área do imóvel, a barra cinza mostra as recusas registradas e as barras coloridas mostram as recusas previstas pelos modelos com A+B+C. Por exemplo, 24\% significa 24 recusas a cada 100 pedidos naquela faixa.}{fig:recusas}
 
 \subsection{Sensibilidade das previsões em perfis fixos}
 
@@ -282,7 +282,7 @@ cenário branco, não latino e de renda baixa na regressão, e 17,60
 pontos abaixo na floresta. Esse contraste combinado inclui mudanças
 simultâneas em raça, etnia e renda relativa.
 
-\graficoresultado{perfis-fixos-valid18.png}{Mudanças nas aprovações previstas com os demais campos fixos. Barras negativas indicam menos aprovações previstas em relação à referência daquele contraste.}{fig:perfis}
+\graficoresultado{perfis-fixos-valid18.png}{O que muda na previsão quando mudamos a ficha? Cada linha compara os mesmos 20.000 perfis antes e depois da troca dos campos indicados. À esquerda do zero, o modelo previu menos aprovações. À direita, previu mais. Uma queda de dez pontos percentuais equivale a dez aprovações previstas a menos a cada 100 perfis.}{fig:perfis}
 
 \section{Conclusão}
 

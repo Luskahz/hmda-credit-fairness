@@ -23,6 +23,9 @@ Thumbs.db
 !/data/interim/.gitkeep
 /data/processed/*
 !/data/processed/.gitkeep
+!/data/processed/hmda_multiano/
+/data/processed/hmda_multiano/*
+!/data/processed/hmda_multiano/hmda_[0-9][0-9][0-9][0-9]_valid18.parquet
 /reports/local/
 /reports/colab/
 

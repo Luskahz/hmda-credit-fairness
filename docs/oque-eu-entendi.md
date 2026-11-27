@@ -57,7 +57,7 @@ Como o CSV é grande, abrimos no notebook 01 um bloco de 100 mil linhas por vez 
 
 Para os pedidos que passaram, convertemos campos como renda e valor do imóvel em números. Campos como faixa de idade e modalidade de crédito ficaram como categorias. Também criamos a coluna `approved`, com 1 para pedidos aprovados e 0 para recusados. Guardamos os 15 campos de entrada e essa resposta num arquivo Parquet, que é o arquivo que o notebook de treinamento abre. O notebook 01 também salva as contagens de cada etapa e mostra quantos valores inválidos ou indisponíveis encontramos em cada coluna.
 
-No arquivo final ficaram 2.570.870 pedidos aprovados e 339.772 recusados. Esse é o ponto de partida do treinamento. O Parquet e os relatórios de preparo ficam em `data/processed/valid_18`. [Notebook 01](../notebooks/01_validacao_e_preparo.ipynb)
+No arquivo final ficaram 2.570.870 pedidos aprovados e 339.772 recusados. Esse é o ponto de partida do treinamento. O Parquet e os relatórios de preparo ficam em `data/processed/valid_18`.
 
 ## Passo 5 — Como separamos os pedidos e treinamos os modelos
 

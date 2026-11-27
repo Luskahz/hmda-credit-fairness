@@ -33,7 +33,7 @@ O notebook lê o CSV em blocos de 100 mil linhas e seleciona somente as colunas 
 
 Idade e razão dívida/renda são tratadas como categorias porque o LAR público inclui faixas nesses campos. As colunas numéricas são convertidas para tipos adequados e a renda relativa do setor é marcada como ausente quando não é positiva. Usamos as categorias agregadas de raça e etnia publicadas pelo HMDA, que podem refletir dados do solicitante e do co-solicitante.
 
-O notebook aplica a auditoria dos 18 campos aos pedidos elegíveis, confere se as duas classes estão presentes e grava `data/processed/valid_18/hmda_2024_purchase_valid18.parquet`. Na mesma pasta, exporta as contagens por etapa, os campos inválidos ou indisponíveis e a composição do recorte validado. No Colab, o notebook 01 também precisa de `scripts/contar_linhas_completas.py` na pasta do projeto. [Notebook 01](../notebooks/01_validacao_e_preparo.ipynb)
+O notebook aplica a auditoria dos 18 campos aos pedidos elegíveis, confere se as duas classes estão presentes e grava `data/processed/valid_18/hmda_2024_purchase_valid18.parquet`. Na mesma pasta, exporta as contagens por etapa, os campos inválidos ou indisponíveis e a composição do recorte validado.
 
 ## Notebook 02 — como os modelos aprendem
 
@@ -75,7 +75,7 @@ cd /d "%USERPROFILE%\Documents\artigo"
 python -m jupyterlab
 ```
 
-Se o Parquet ainda não existir, execute o notebook 01 até aparecer **Parquet pronto**. Depois, execute o notebook 02. No Colab, ajuste o caminho do CSV se ele estiver em outra pasta do Drive.
+A rodada de 2024 abaixo documenta o fluxo histórico. Para novas rodadas, execute o [notebook 03](../notebooks/03_preparo_hmda_por_ano.ipynb) e depois o [notebook 04](../notebooks/04_treinamento_hmda_multiano.ipynb).
 
 | Saída | Uso no artigo ou na apresentação |
 | --- | --- |
