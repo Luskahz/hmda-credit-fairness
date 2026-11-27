@@ -87,3 +87,7 @@ Para transferir a base preparada entre computadores pelo Git, o .gitignore liber
 O notebook 03 usa `zipfile.ZipFile` para abrir o CSV dentro de cada ZIP. O Python descompacta o conteúdo conforme lê, e o pandas entrega as linhas em blocos para aplicar os filtros e a validação. Assim, o preparo grava o Parquet anual sem criar uma cópia do CSV bruto no disco.
 
 Para a rodada multiano, execute o notebook 03 para gerar os Parquets anuais e as contagens de partição. O notebook 04 usa os pedidos de 2018 a 2025 para treinar as combinações A, A+B, A+C e A+B+C, com avaliação geral e por ano. O notebook 02 lê somente o Parquet histórico de 2024.
+
+Em 26/11/2026. conferimos a conclusão da rodada local dos notebooks 03 e 04 para 2018 a 2025. Os oito Parquets foram gravados e os relatórios e gráficos finais saíram em `reports/local/hmda_multiano/` por volta das 22h19. Foram 28.069.206 pedidos válidos (19.648.433 no treino. 5.613.875 na validação e 2.806.898 no teste). com oito combinações no relatório geral e 64 linhas no relatório por ano.
+
+O objetivo imediato da rodada multiano foi concluído. O registro versionado inclui a saída do notebook 04, os relatórios agregados e gráficos da rodada local, e `particoes_por_ano.csv`, que o notebook 04 precisa ler junto com os oito Parquets para repetir o treino em outro computador.

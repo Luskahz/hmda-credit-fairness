@@ -1,0 +1,194 @@
+{
+  "anos": [
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "campos_validos": 18,
+  "semente": 42,
+  "particoes": [
+    {
+      "ano": 2018,
+      "particao": "ajuste",
+      "n": 2558946,
+      "aprovados": 2293963,
+      "recusados": 264983
+    },
+    {
+      "ano": 2018,
+      "particao": "validacao",
+      "n": 731141,
+      "aprovados": 655425,
+      "recusados": 75716
+    },
+    {
+      "ano": 2018,
+      "particao": "teste",
+      "n": 365555,
+      "aprovados": 327703,
+      "recusados": 37852
+    },
+    {
+      "ano": 2019,
+      "particao": "ajuste",
+      "n": 2607091,
+      "aprovados": 2359519,
+      "recusados": 247572
+    },
+    {
+      "ano": 2019,
+      "particao": "validacao",
+      "n": 744888,
+      "aprovados": 674149,
+      "recusados": 70739
+    },
+    {
+      "ano": 2019,
+      "particao": "teste",
+      "n": 372437,
+      "aprovados": 337073,
+      "recusados": 35364
+    },
+    {
+      "ano": 2020,
+      "particao": "ajuste",
+      "n": 2853064,
+      "aprovados": 2569747,
+      "recusados": 283317
+    },
+    {
+      "ano": 2020,
+      "particao": "validacao",
+      "n": 815168,
+      "aprovados": 734217,
+      "recusados": 80951
+    },
+    {
+      "ano": 2020,
+      "particao": "teste",
+      "n": 407579,
+      "aprovados": 367104,
+      "recusados": 40475
+    },
+    {
+      "ano": 2021,
+      "particao": "ajuste",
+      "n": 3014377,
+      "aprovados": 2726355,
+      "recusados": 288022
+    },
+    {
+      "ano": 2021,
+      "particao": "validacao",
+      "n": 861242,
+      "aprovados": 778955,
+      "recusados": 82287
+    },
+    {
+      "ano": 2021,
+      "particao": "teste",
+      "n": 430637,
+      "aprovados": 389486,
+      "recusados": 41151
+    },
+    {
+      "ano": 2022,
+      "particao": "ajuste",
+      "n": 2498269,
+      "aprovados": 2219958,
+      "recusados": 278311
+    },
+    {
+      "ano": 2022,
+      "particao": "validacao",
+      "n": 713787,
+      "aprovados": 634268,
+      "recusados": 79519
+    },
+    {
+      "ano": 2022,
+      "particao": "teste",
+      "n": 356893,
+      "aprovados": 317137,
+      "recusados": 39756
+    },
+    {
+      "ano": 2023,
+      "particao": "ajuste",
+      "n": 2019483,
+      "aprovados": 1773917,
+      "recusados": 245566
+    },
+    {
+      "ano": 2023,
+      "particao": "validacao",
+      "n": 577005,
+      "aprovados": 506837,
+      "recusados": 70168
+    },
+    {
+      "ano": 2023,
+      "particao": "teste",
+      "n": 288494,
+      "aprovados": 253416,
+      "recusados": 35078
+    },
+    {
+      "ano": 2024,
+      "particao": "ajuste",
+      "n": 2037450,
+      "aprovados": 1799609,
+      "recusados": 237841
+    },
+    {
+      "ano": 2024,
+      "particao": "validacao",
+      "n": 582132,
+      "aprovados": 514179,
+      "recusados": 67953
+    },
+    {
+      "ano": 2024,
+      "particao": "teste",
+      "n": 291060,
+      "aprovados": 257082,
+      "recusados": 33978
+    },
+    {
+      "ano": 2025,
+      "particao": "ajuste",
+      "n": 2059753,
+      "aprovados": 1824985,
+      "recusados": 234768
+    },
+    {
+      "ano": 2025,
+      "particao": "validacao",
+      "n": 588512,
+      "aprovados": 521425,
+      "recusados": 67087
+    },
+    {
+      "ano": 2025,
+      "particao": "teste",
+      "n": 294243,
+      "aprovados": 260709,
+      "recusados": 33534
+    }
+  ],
+  "modelos": [
+    "Regressão logística incremental",
+    "Floresta em blocos"
+  ],
+  "configuracoes": [
+    "A",
+    "A+B",
+    "A+C",
+    "A+B+C"
+  ]
+}

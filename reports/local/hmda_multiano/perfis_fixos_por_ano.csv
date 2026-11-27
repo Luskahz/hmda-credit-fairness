@@ -1,0 +1,193 @@
+ano,algoritmo,raca,etnia,renda_relativa,n_perfis,prob_media_aprovacao,taxa_aprovacao_prevista
+2018,Regressão logística incremental,White,Not Hispanic or Latino,67.0,2500,0.9033279418945312,0.7772
+2018,Floresta em blocos,White,Not Hispanic or Latino,67.0,2500,0.9020068408897192,0.788
+2018,Regressão logística incremental,White,Not Hispanic or Latino,143.0,2500,0.914897084236145,0.8156
+2018,Floresta em blocos,White,Not Hispanic or Latino,143.0,2500,0.904431743925314,0.7868
+2018,Regressão logística incremental,White,Hispanic or Latino,67.0,2500,0.8772152066230774,0.6512
+2018,Floresta em blocos,White,Hispanic or Latino,67.0,2500,0.8877707868701702,0.664
+2018,Regressão logística incremental,White,Hispanic or Latino,143.0,2500,0.8917534351348877,0.7252
+2018,Floresta em blocos,White,Hispanic or Latino,143.0,2500,0.8889744560902669,0.6724
+2018,Regressão logística incremental,Black or African American,Not Hispanic or Latino,67.0,2500,0.8463650345802307,0.4656
+2018,Floresta em blocos,Black or African American,Not Hispanic or Latino,67.0,2500,0.8766480866246591,0.4284
+2018,Regressão logística incremental,Black or African American,Not Hispanic or Latino,143.0,2500,0.8642343878746033,0.5788
+2018,Floresta em blocos,Black or African American,Not Hispanic or Latino,143.0,2500,0.8805730382105142,0.5196
+2018,Regressão logística incremental,Black or African American,Hispanic or Latino,67.0,2500,0.8069058656692505,0.1932
+2018,Floresta em blocos,Black or African American,Hispanic or Latino,67.0,2500,0.8700633130101662,0.2368
+2018,Regressão logística incremental,Black or African American,Hispanic or Latino,143.0,2500,0.8287222385406494,0.3288
+2018,Floresta em blocos,Black or African American,Hispanic or Latino,143.0,2500,0.8724746257255971,0.3536
+2018,Regressão logística incremental,American Indian or Alaska Native,Not Hispanic or Latino,67.0,2500,0.8721629977226257,0.6236
+2018,Floresta em blocos,American Indian or Alaska Native,Not Hispanic or Latino,67.0,2500,0.882474926394671,0.5748
+2018,Regressão logística incremental,American Indian or Alaska Native,Not Hispanic or Latino,143.0,2500,0.8872605562210083,0.7024
+2018,Floresta em blocos,American Indian or Alaska Native,Not Hispanic or Latino,143.0,2500,0.8864421198781308,0.6224
+2018,Regressão logística incremental,American Indian or Alaska Native,Hispanic or Latino,67.0,2500,0.8384736180305481,0.4056
+2018,Floresta em blocos,American Indian or Alaska Native,Hispanic or Latino,67.0,2500,0.8700930833635675,0.208
+2018,Regressão logística incremental,American Indian or Alaska Native,Hispanic or Latino,143.0,2500,0.8571613430976868,0.536
+2018,Floresta em blocos,American Indian or Alaska Native,Hispanic or Latino,143.0,2500,0.8732746548042973,0.372
+2019,Regressão logística incremental,White,Not Hispanic or Latino,67.0,2500,0.9156838059425354,0.8112
+2019,Floresta em blocos,White,Not Hispanic or Latino,67.0,2500,0.9013574368841515,0.8008
+2019,Regressão logística incremental,White,Not Hispanic or Latino,143.0,2500,0.9257593750953674,0.8444
+2019,Floresta em blocos,White,Not Hispanic or Latino,143.0,2500,0.9053241459089266,0.8184
+2019,Regressão logística incremental,White,Hispanic or Latino,67.0,2500,0.8927857279777527,0.7168
+2019,Floresta em blocos,White,Hispanic or Latino,67.0,2500,0.8891779664199825,0.6904
+2019,Regressão logística incremental,White,Hispanic or Latino,143.0,2500,0.9055602550506592,0.7696
+2019,Floresta em blocos,White,Hispanic or Latino,143.0,2500,0.8909943863064124,0.7044
+2019,Regressão logística incremental,Black or African American,Not Hispanic or Latino,67.0,2500,0.8654734492301941,0.58
+2019,Floresta em blocos,Black or African American,Not Hispanic or Latino,67.0,2500,0.8751760808591648,0.3408
+2019,Regressão logística incremental,Black or African American,Not Hispanic or Latino,143.0,2500,0.8813265562057495,0.6584
+2019,Floresta em blocos,Black or African American,Not Hispanic or Latino,143.0,2500,0.8802216975899573,0.5256
+2019,Regressão logística incremental,Black or African American,Hispanic or Latino,67.0,2500,0.8301576375961304,0.3532
+2019,Floresta em blocos,Black or African American,Hispanic or Latino,67.0,2500,0.8720645478756919,0.2544
+2019,Regressão logística incremental,Black or African American,Hispanic or Latino,143.0,2500,0.8497349619865417,0.494
+2019,Floresta em blocos,Black or African American,Hispanic or Latino,143.0,2500,0.8750577848687,0.4208
+2019,Regressão logística incremental,American Indian or Alaska Native,Not Hispanic or Latino,67.0,2500,0.8883314728736877,0.69
+2019,Floresta em blocos,American Indian or Alaska Native,Not Hispanic or Latino,67.0,2500,0.8818687479482725,0.5564
+2019,Regressão logística incremental,American Indian or Alaska Native,Not Hispanic or Latino,143.0,2500,0.9016191363334656,0.7508
+2019,Floresta em blocos,American Indian or Alaska Native,Not Hispanic or Latino,143.0,2500,0.8878358202794471,0.6568
+2019,Regressão logística incremental,American Indian or Alaska Native,Hispanic or Latino,67.0,2500,0.8584441542625427,0.548
+2019,Floresta em blocos,American Indian or Alaska Native,Hispanic or Latino,67.0,2500,0.8749912668172583,0.3532
+2019,Regressão logística incremental,American Indian or Alaska Native,Hispanic or Latino,143.0,2500,0.8750622868537903,0.6244
+2019,Floresta em blocos,American Indian or Alaska Native,Hispanic or Latino,143.0,2500,0.8787214204207259,0.5256
+2020,Regressão logística incremental,White,Not Hispanic or Latino,67.0,2500,0.9073185324668884,0.8076
+2020,Floresta em blocos,White,Not Hispanic or Latino,67.0,2500,0.9058665132409953,0.8404
+2020,Regressão logística incremental,White,Not Hispanic or Latino,143.0,2500,0.9179092645645142,0.842
+2020,Floresta em blocos,White,Not Hispanic or Latino,143.0,2500,0.9098305217452737,0.8496
+2020,Regressão logística incremental,White,Hispanic or Latino,67.0,2500,0.8834251761436462,0.6948
+2020,Floresta em blocos,White,Hispanic or Latino,67.0,2500,0.8918190693142114,0.7592
+2020,Regressão logística incremental,White,Hispanic or Latino,143.0,2500,0.8967286348342896,0.766
+2020,Floresta em blocos,White,Hispanic or Latino,143.0,2500,0.8946490607344327,0.7772
+2020,Regressão logística incremental,Black or African American,Not Hispanic or Latino,67.0,2500,0.8551491498947144,0.5492
+2020,Floresta em blocos,Black or African American,Not Hispanic or Latino,67.0,2500,0.8794401186749635,0.5608
+2020,Regressão logística incremental,Black or African American,Not Hispanic or Latino,143.0,2500,0.8715375065803528,0.6368
+2020,Floresta em blocos,Black or African American,Not Hispanic or Latino,143.0,2500,0.8851130750517641,0.6652
+2020,Regressão logística incremental,Black or African American,Hispanic or Latino,67.0,2500,0.8188210725784302,0.2812
+2020,Floresta em blocos,Black or African American,Hispanic or Latino,67.0,2500,0.8704542100338336,0.304
+2020,Regressão logística incremental,Black or African American,Hispanic or Latino,143.0,2500,0.838932991027832,0.4304
+2020,Floresta em blocos,Black or African American,Hispanic or Latino,143.0,2500,0.8747650742209692,0.4904
+2020,Regressão logística incremental,American Indian or Alaska Native,Not Hispanic or Latino,67.0,2500,0.8787997364997864,0.6708
+2020,Floresta em blocos,American Indian or Alaska Native,Not Hispanic or Latino,67.0,2500,0.8888290220867723,0.7084
+2020,Regressão logística incremental,American Indian or Alaska Native,Not Hispanic or Latino,143.0,2500,0.89261794090271,0.7436
+2020,Floresta em blocos,American Indian or Alaska Native,Not Hispanic or Latino,143.0,2500,0.8948577011884526,0.756
+2020,Regressão logística incremental,American Indian or Alaska Native,Hispanic or Latino,67.0,2500,0.8479006886482239,0.5004
+2020,Floresta em blocos,American Indian or Alaska Native,Hispanic or Latino,67.0,2500,0.8795899835972907,0.5952
+2020,Regressão logística incremental,American Indian or Alaska Native,Hispanic or Latino,143.0,2500,0.8650544881820679,0.6008
+2020,Floresta em blocos,American Indian or Alaska Native,Hispanic or Latino,143.0,2500,0.8842577366206217,0.6708
+2021,Regressão logística incremental,White,Not Hispanic or Latino,67.0,2500,0.91827791929245,0.8224
+2021,Floresta em blocos,White,Not Hispanic or Latino,67.0,2500,0.909268360016398,0.8488
+2021,Regressão logística incremental,White,Not Hispanic or Latino,143.0,2500,0.9278736114501953,0.8552
+2021,Floresta em blocos,White,Not Hispanic or Latino,143.0,2500,0.9130658717490829,0.8652
+2021,Regressão logística incremental,White,Hispanic or Latino,67.0,2500,0.8964834213256836,0.7364
+2021,Floresta em blocos,White,Hispanic or Latino,67.0,2500,0.8970518201012284,0.7792
+2021,Regressão logística incremental,White,Hispanic or Latino,143.0,2500,0.9086415767669678,0.7844
+2021,Floresta em blocos,White,Hispanic or Latino,143.0,2500,0.8987385094249508,0.7952
+2021,Regressão logística incremental,Black or African American,Not Hispanic or Latino,67.0,2500,0.8704749941825867,0.632
+2021,Floresta em blocos,Black or African American,Not Hispanic or Latino,67.0,2500,0.8822727205806489,0.5996
+2021,Regressão logística incremental,Black or African American,Not Hispanic or Latino,143.0,2500,0.8855748772621155,0.6944
+2021,Floresta em blocos,Black or African American,Not Hispanic or Latino,143.0,2500,0.8888074620933696,0.6776
+2021,Regressão logística incremental,Black or African American,Hispanic or Latino,67.0,2500,0.8367800712585449,0.4104
+2021,Floresta em blocos,Black or African American,Hispanic or Latino,67.0,2500,0.8782196840241022,0.5032
+2021,Regressão logística incremental,Black or African American,Hispanic or Latino,143.0,2500,0.8554699420928955,0.5468
+2021,Floresta em blocos,Black or African American,Hispanic or Latino,143.0,2500,0.8822993100624071,0.6212
+2021,Regressão logística incremental,American Indian or Alaska Native,Not Hispanic or Latino,67.0,2500,0.8922435641288757,0.7184
+2021,Floresta em blocos,American Indian or Alaska Native,Not Hispanic or Latino,67.0,2500,0.8923984739577078,0.7308
+2021,Regressão logística incremental,American Indian or Alaska Native,Not Hispanic or Latino,143.0,2500,0.9048905968666077,0.7696
+2021,Floresta em blocos,American Indian or Alaska Native,Not Hispanic or Latino,143.0,2500,0.8990472342001085,0.776
+2021,Regressão logística incremental,American Indian or Alaska Native,Hispanic or Latino,67.0,2500,0.8637753129005432,0.5928
+2021,Floresta em blocos,American Indian or Alaska Native,Hispanic or Latino,67.0,2500,0.8843497079099457,0.634
+2021,Regressão logística incremental,American Indian or Alaska Native,Hispanic or Latino,143.0,2500,0.8796096444129944,0.6724
+2021,Floresta em blocos,American Indian or Alaska Native,Hispanic or Latino,143.0,2500,0.8896115410577551,0.7152
+2022,Regressão logística incremental,White,Not Hispanic or Latino,67.0,2500,0.9044568538665771,0.7908
+2022,Floresta em blocos,White,Not Hispanic or Latino,67.0,2500,0.9053842190538985,0.8468
+2022,Regressão logística incremental,White,Not Hispanic or Latino,143.0,2500,0.9147388935089111,0.826
+2022,Floresta em blocos,White,Not Hispanic or Latino,143.0,2500,0.9095491599139276,0.8688
+2022,Regressão logística incremental,White,Hispanic or Latino,67.0,2500,0.881421685218811,0.7216
+2022,Floresta em blocos,White,Hispanic or Latino,67.0,2500,0.8929641763296162,0.762
+2022,Regressão logística incremental,White,Hispanic or Latino,143.0,2500,0.8942236304283142,0.7608
+2022,Floresta em blocos,White,Hispanic or Latino,143.0,2500,0.8952588427799252,0.784
+2022,Regressão logística incremental,Black or African American,Not Hispanic or Latino,67.0,2500,0.8543556928634644,0.602
+2022,Floresta em blocos,Black or African American,Not Hispanic or Latino,67.0,2500,0.8807495838816146,0.6208
+2022,Regressão logística incremental,Black or African American,Not Hispanic or Latino,143.0,2500,0.8700223565101624,0.6724
+2022,Floresta em blocos,Black or African American,Not Hispanic or Latino,143.0,2500,0.8870092637461917,0.7052
+2022,Regressão logística incremental,Black or African American,Hispanic or Latino,67.0,2500,0.8197644352912903,0.3864
+2022,Floresta em blocos,Black or African American,Hispanic or Latino,67.0,2500,0.8674850608170069,0.1964
+2022,Regressão logística incremental,Black or African American,Hispanic or Latino,143.0,2500,0.8388959169387817,0.5184
+2022,Floresta em blocos,Black or African American,Hispanic or Latino,143.0,2500,0.8709706580878493,0.346
+2022,Regressão logística incremental,American Indian or Alaska Native,Not Hispanic or Latino,67.0,2500,0.8769822120666504,0.706
+2022,Floresta em blocos,American Indian or Alaska Native,Not Hispanic or Latino,67.0,2500,0.8900283300816445,0.728
+2022,Regressão logística incremental,American Indian or Alaska Native,Not Hispanic or Latino,143.0,2500,0.8902621269226074,0.7468
+2022,Floresta em blocos,American Indian or Alaska Native,Not Hispanic or Latino,143.0,2500,0.8963963933115605,0.7728
+2022,Regressão logística incremental,American Indian or Alaska Native,Hispanic or Latino,67.0,2500,0.8474408388137817,0.5688
+2022,Floresta em blocos,American Indian or Alaska Native,Hispanic or Latino,67.0,2500,0.8747817796976045,0.5104
+2022,Regressão logística incremental,American Indian or Alaska Native,Hispanic or Latino,143.0,2500,0.8638188242912292,0.6468
+2022,Floresta em blocos,American Indian or Alaska Native,Hispanic or Latino,143.0,2500,0.8791250618133859,0.6328
+2023,Regressão logística incremental,White,Not Hispanic or Latino,67.0,2500,0.9030812382698059,0.7748
+2023,Floresta em blocos,White,Not Hispanic or Latino,67.0,2500,0.8964734706057081,0.7964
+2023,Regressão logística incremental,White,Not Hispanic or Latino,143.0,2500,0.913648247718811,0.8132
+2023,Floresta em blocos,White,Not Hispanic or Latino,143.0,2500,0.9043828233287342,0.8368
+2023,Regressão logística incremental,White,Hispanic or Latino,67.0,2500,0.8794999718666077,0.694
+2023,Floresta em blocos,White,Hispanic or Latino,67.0,2500,0.8808200355719622,0.6024
+2023,Regressão logística incremental,White,Hispanic or Latino,143.0,2500,0.8925900459289551,0.7352
+2023,Floresta em blocos,White,Hispanic or Latino,143.0,2500,0.8872116302247463,0.7288
+2023,Regressão logística incremental,Black or African American,Not Hispanic or Latino,67.0,2500,0.8519406318664551,0.584
+2023,Floresta em blocos,Black or African American,Not Hispanic or Latino,67.0,2500,0.8712272037765704,0.2768
+2023,Regressão logística incremental,Black or African American,Not Hispanic or Latino,143.0,2500,0.8678744435310364,0.654
+2023,Floresta em blocos,Black or African American,Not Hispanic or Latino,143.0,2500,0.8791539155542225,0.5944
+2023,Regressão logística incremental,Black or African American,Hispanic or Latino,67.0,2500,0.8169198036193848,0.41
+2023,Floresta em blocos,Black or African American,Hispanic or Latino,67.0,2500,0.864288544946723,0.12
+2023,Regressão logística incremental,Black or African American,Hispanic or Latino,143.0,2500,0.8362630605697632,0.516
+2023,Floresta em blocos,Black or African American,Hispanic or Latino,143.0,2500,0.8714627197441916,0.3812
+2023,Regressão logística incremental,American Indian or Alaska Native,Not Hispanic or Latino,67.0,2500,0.8749691247940063,0.678
+2023,Floresta em blocos,American Indian or Alaska Native,Not Hispanic or Latino,67.0,2500,0.8851125417701731,0.666
+2023,Regressão logística incremental,American Indian or Alaska Native,Not Hispanic or Latino,143.0,2500,0.8885353803634644,0.7204
+2023,Floresta em blocos,American Indian or Alaska Native,Not Hispanic or Latino,143.0,2500,0.8908744362148294,0.7416
+2023,Regressão logística incremental,American Indian or Alaska Native,Hispanic or Latino,67.0,2500,0.8449228405952454,0.5604
+2023,Floresta em blocos,American Indian or Alaska Native,Hispanic or Latino,67.0,2500,0.8718134330106492,0.3536
+2023,Regressão logística incremental,American Indian or Alaska Native,Hispanic or Latino,143.0,2500,0.861559271812439,0.6276
+2023,Floresta em blocos,American Indian or Alaska Native,Hispanic or Latino,143.0,2500,0.8765887835764486,0.5472
+2024,Regressão logística incremental,White,Not Hispanic or Latino,67.0,2500,0.9010315537452698,0.7588
+2024,Floresta em blocos,White,Not Hispanic or Latino,67.0,2500,0.9034182941437681,0.8372
+2024,Regressão logística incremental,White,Not Hispanic or Latino,143.0,2500,0.9119808673858643,0.7972
+2024,Floresta em blocos,White,Not Hispanic or Latino,143.0,2500,0.9077402160275444,0.8476
+2024,Regressão logística incremental,White,Hispanic or Latino,67.0,2500,0.8765941262245178,0.6684
+2024,Floresta em blocos,White,Hispanic or Latino,67.0,2500,0.8888821820602916,0.7372
+2024,Regressão logística incremental,White,Hispanic or Latino,143.0,2500,0.8901584148406982,0.72
+2024,Floresta em blocos,White,Hispanic or Latino,143.0,2500,0.8898396059371331,0.74
+2024,Regressão logística incremental,Black or African American,Not Hispanic or Latino,67.0,2500,0.8480654358863831,0.5704
+2024,Floresta em blocos,Black or African American,Not Hispanic or Latino,67.0,2500,0.8783171059231467,0.538
+2024,Regressão logística incremental,Black or African American,Not Hispanic or Latino,143.0,2500,0.8645539283752441,0.6332
+2024,Floresta em blocos,Black or African American,Not Hispanic or Latino,143.0,2500,0.8850603184008163,0.662
+2024,Regressão logística incremental,Black or African American,Hispanic or Latino,67.0,2500,0.8119014501571655,0.388
+2024,Floresta em blocos,Black or African American,Hispanic or Latino,67.0,2500,0.8707735321373737,0.3
+2024,Regressão logística incremental,Black or African American,Hispanic or Latino,143.0,2500,0.8318620920181274,0.4972
+2024,Floresta em blocos,Black or African American,Hispanic or Latino,143.0,2500,0.8738405780183133,0.4844
+2024,Regressão logística incremental,American Indian or Alaska Native,Not Hispanic or Latino,67.0,2500,0.8719007968902588,0.6524
+2024,Floresta em blocos,American Indian or Alaska Native,Not Hispanic or Latino,67.0,2500,0.8894183353771812,0.712
+2024,Regressão logística incremental,American Indian or Alaska Native,Not Hispanic or Latino,143.0,2500,0.8859564661979675,0.7012
+2024,Floresta em blocos,American Indian or Alaska Native,Not Hispanic or Latino,143.0,2500,0.8955774264277243,0.752
+2024,Regressão logística incremental,American Indian or Alaska Native,Hispanic or Latino,67.0,2500,0.8408097624778748,0.538
+2024,Floresta em blocos,American Indian or Alaska Native,Hispanic or Latino,67.0,2500,0.8751712327778783,0.4828
+2024,Regressão logística incremental,American Indian or Alaska Native,Hispanic or Latino,143.0,2500,0.8580167889595032,0.606
+2024,Floresta em blocos,American Indian or Alaska Native,Hispanic or Latino,143.0,2500,0.878494659163363,0.5988
+2025,Regressão logística incremental,White,Not Hispanic or Latino,67.0,2500,0.9042786359786987,0.7772
+2025,Floresta em blocos,White,Not Hispanic or Latino,67.0,2500,0.8960864452231726,0.7996
+2025,Regressão logística incremental,White,Not Hispanic or Latino,143.0,2500,0.9148496389389038,0.8108
+2025,Floresta em blocos,White,Not Hispanic or Latino,143.0,2500,0.898507291874821,0.806
+2025,Regressão logística incremental,White,Hispanic or Latino,67.0,2500,0.8808043003082275,0.7028
+2025,Floresta em blocos,White,Hispanic or Latino,67.0,2500,0.8831060908859095,0.6712
+2025,Regressão logística incremental,White,Hispanic or Latino,143.0,2500,0.8938167691230774,0.7416
+2025,Floresta em blocos,White,Hispanic or Latino,143.0,2500,0.8844515705885239,0.6956
+2025,Regressão logística incremental,Black or African American,Not Hispanic or Latino,67.0,2500,0.8535303473472595,0.6128
+2025,Floresta em blocos,Black or African American,Not Hispanic or Latino,67.0,2500,0.8749510467606891,0.4604
+2025,Regressão logística incremental,Black or African American,Not Hispanic or Latino,143.0,2500,0.8692810535430908,0.6716
+2025,Floresta em blocos,Black or African American,Not Hispanic or Latino,143.0,2500,0.879166134635064,0.5828
+2025,Regressão logística incremental,Black or African American,Hispanic or Latino,67.0,2500,0.8190468549728394,0.4456
+2025,Floresta em blocos,Black or African American,Hispanic or Latino,67.0,2500,0.8665190112294886,0.1664
+2025,Regressão logística incremental,Black or African American,Hispanic or Latino,143.0,2500,0.8380735516548157,0.5492
+2025,Floresta em blocos,Black or African American,Hispanic or Latino,143.0,2500,0.8696191102672165,0.3196
+2025,Regressão logística incremental,American Indian or Alaska Native,Not Hispanic or Latino,67.0,2500,0.8763097524642944,0.6908
+2025,Floresta em blocos,American Indian or Alaska Native,Not Hispanic or Latino,67.0,2500,0.882615650851751,0.6416
+2025,Regressão logística incremental,American Indian or Alaska Native,Not Hispanic or Latino,143.0,2500,0.8897815346717834,0.734
+2025,Floresta em blocos,American Indian or Alaska Native,Not Hispanic or Latino,143.0,2500,0.8864976401150361,0.7004
+2025,Regressão logística incremental,American Indian or Alaska Native,Hispanic or Latino,67.0,2500,0.8466070294380188,0.586
+2025,Floresta em blocos,American Indian or Alaska Native,Hispanic or Latino,67.0,2500,0.872658927095942,0.4028
+2025,Regressão logística incremental,American Indian or Alaska Native,Hispanic or Latino,143.0,2500,0.8630329966545105,0.65
+2025,Floresta em blocos,American Indian or Alaska Native,Hispanic or Latino,143.0,2500,0.8760783357250584,0.54
